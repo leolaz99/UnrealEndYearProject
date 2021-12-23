@@ -81,6 +81,16 @@ void ALLCharacter::Rolling()
 	}	
 }
 
+void ALLCharacter::StartAim()
+{
+	bUseControllerRotationYaw = true;
+}
+
+void ALLCharacter::StopAim()
+{
+	bUseControllerRotationYaw = false;
+}
+
 void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -46,6 +46,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float rollingDistance = 6000.f;
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+		void StartAim();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+		void StopAim();
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 
