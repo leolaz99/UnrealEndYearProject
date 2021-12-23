@@ -26,7 +26,25 @@ protected:
 	void StopCrouch();
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void Crouching();
+		void Crouching();
+
+	UPROPERTY(EditAnywhere)
+		float normalSpeed;
+
+	UPROPERTY(EditAnywhere)
+		float sprintSpeed;
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+		void StartSprint();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+		void StopSprint();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+		void Rolling();
+
+	UPROPERTY(EditAnywhere)
+		float rollingDistance = 6000.f;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

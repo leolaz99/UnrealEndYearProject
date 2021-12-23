@@ -9,6 +9,8 @@ ALLCharacter::ALLCharacter()
 void ALLCharacter::BeginPlay()
 {
 	Super::BeginPlay();	
+
+	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 }
 
 void ALLCharacter::MoveForward(float value)
@@ -26,7 +28,7 @@ void ALLCharacter::MoveHorizontal(float value)
 	FRotator rotation = GetControlRotation();
 	FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
 
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 	AddMovementInput(Direction * value);
 }
@@ -52,6 +54,31 @@ void ALLCharacter::Crouching()
 		StartCrouch();
 	else
 		StopCrouch();
+}
+
+void ALLCharacter::StartSprint()
+{
+	if (GetCharacterMovement()->IsCrouching()) 
+	{
+		GetCharacterMovement()->bWantsToCrouch = false;
+		GetCharacterMovement()->UnCrouch();
+	}
+	
+	GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+}
+
+void ALLCharacter::StopSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+}
+
+void ALLCharacter::Rolling()
+{
+	if (!GetCharacterMovement()->IsCrouching()) 
+	{
+		FVector RollDirection = this->GetLastMovementInputVector();
+		LaunchCharacter(RollDirection * rollingDistance, true, true);
+	}	
 }
 
 void ALLCharacter::Tick(float DeltaTime)
