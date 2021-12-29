@@ -27,7 +27,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void Crouching();
-
+	
 	UPROPERTY(EditAnywhere)
 	float normalSpeed;
 
@@ -56,4 +56,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	bool crouched;
 };

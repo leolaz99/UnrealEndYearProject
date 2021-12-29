@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "LLCharacter.h"
 #include "LLAnimInstance.generated.h"
 
 UCLASS()
@@ -22,4 +23,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float Direction;
+
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	bool isCrouching;
 };

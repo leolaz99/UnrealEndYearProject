@@ -37,19 +37,19 @@ void ALLCharacter::StartCrouch()
 {
 	if (!GetCharacterMovement()->IsFalling()) 
 	{
+		crouched = true;		
 		GetCharacterMovement()->bWantsToCrouch = true;
-		GetCharacterMovement()->Crouch();
 	}	
 }
 
 void ALLCharacter::StopCrouch()
 {
-	GetCharacterMovement()->bWantsToCrouch = false;
-	GetCharacterMovement()->UnCrouch();		
+	crouched = false;
+	GetCharacterMovement()->bWantsToCrouch = false;		
 }
 
 void ALLCharacter::Crouching()
-{
+{	
 	if (!GetCharacterMovement()->IsCrouching())
 		StartCrouch();
 	else
@@ -58,12 +58,7 @@ void ALLCharacter::Crouching()
 
 void ALLCharacter::StartSprint()
 {
-	if (GetCharacterMovement()->IsCrouching()) 
-	{
-		GetCharacterMovement()->bWantsToCrouch = false;
-		GetCharacterMovement()->UnCrouch();
-	}
-	
+	StopCrouch();
 	GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
 }
 

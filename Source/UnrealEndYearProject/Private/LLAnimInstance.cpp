@@ -15,16 +15,19 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	const APawn* pawnOwner = TryGetPawnOwner();
+	APawn* pawnOwner = TryGetPawnOwner();
 
 	if (pawnOwner != nullptr) 
 	{
-		const UCharacterMovementComponent* charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
+		UCharacterMovementComponent* charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
+		ALLCharacter* a = Cast<ALLCharacter>(pawnOwner);
+		
+		isCrouching = a->crouched;
 		if (charMov) 
 		{
 			const FVector speed = pawnOwner->GetVelocity();
 			const FRotator rotation = pawnOwner->GetActorRotation();
-			
+
 			const float currentSpeed = speed.Size();	
 			ActualSpeed = currentSpeed;	
 			Direction = CalculateDirection(speed, rotation);
