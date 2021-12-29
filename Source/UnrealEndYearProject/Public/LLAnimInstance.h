@@ -22,5 +22,4 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float Direction;
-	
 };

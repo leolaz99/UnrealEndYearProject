@@ -23,16 +23,14 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (charMov) 
 		{
 			const FVector speed = pawnOwner->GetVelocity();
-			const float maxSpeed = charMov->GetMaxSpeed();
-			const float currentSpeed = speed.Size();
-			ActualSpeed = currentSpeed;
-
-			const FVector velocity = pawnOwner->GetVelocity();
 			const FRotator rotation = pawnOwner->GetActorRotation();
-			Direction = CalculateDirection(velocity, rotation);
+			
+			const float currentSpeed = speed.Size();	
+			ActualSpeed = currentSpeed;	
+			Direction = CalculateDirection(speed, rotation);
 		}
 	}
 
 	else
-		UE_LOG(LogTemp, Error, TEXT("Missing Pawn Owner! - UDTAnimInstance::NativeUpdateAnimation"));
+		UE_LOG(LogTemp, Error, TEXT("Missing Pawn Owner! - ULLAnimInstance::NativeUpdateAnimation"));
 }
