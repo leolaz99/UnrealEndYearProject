@@ -26,4 +26,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isCrouching;
+
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	bool isAiming;
 };

@@ -4,6 +4,7 @@
 ALLCharacter::ALLCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	normalSensitivity = 1.f;
 }
 
 void ALLCharacter::BeginPlay()
@@ -11,6 +12,7 @@ void ALLCharacter::BeginPlay()
 	Super::BeginPlay();	
 
 	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	sensitivity = normalSensitivity;
 }
 
 void ALLCharacter::MoveForward(float value)
@@ -57,14 +59,18 @@ void ALLCharacter::Crouching()
 }
 
 void ALLCharacter::StartSprint()
-{
-	StopCrouch();
-	GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+{	
+	if (!aiming) 
+	{
+		StopCrouch();
+		GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+	}	
 }
 
 void ALLCharacter::StopSprint()
 {
-	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	if (!aiming)
+		GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 }
 
 void ALLCharacter::Rolling()
@@ -79,11 +85,17 @@ void ALLCharacter::Rolling()
 void ALLCharacter::StartAim()
 {
 	bUseControllerRotationYaw = true;
+	aiming = true;
+	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
+	sensitivity = aimSensitivity;
 }
 
 void ALLCharacter::StopAim()
 {
 	bUseControllerRotationYaw = false;
+	aiming = false;
+	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	sensitivity = normalSensitivity;
 }
 
 void ALLCharacter::Tick(float DeltaTime)

@@ -20,9 +20,11 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (pawnOwner != nullptr) 
 	{
 		UCharacterMovementComponent* charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
-		ALLCharacter* a = Cast<ALLCharacter>(pawnOwner);
+		ALLCharacter* characterInstance = Cast<ALLCharacter>(pawnOwner);
 		
-		isCrouching = a->crouched;
+		isCrouching = characterInstance->crouched;
+		isAiming = characterInstance->aiming;
+
 		if (charMov) 
 		{
 			const FVector speed = pawnOwner->GetVelocity();

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "LLCharacter.generated.h"
 
 UCLASS()
@@ -21,6 +22,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void MoveHorizontal(float value);
 
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	float sensitivity;
+
 	void StartCrouch();
 
 	void StopCrouch();
@@ -32,7 +36,16 @@ protected:
 	float normalSpeed;
 
 	UPROPERTY(EditAnywhere)
+	float normalSensitivity;
+
+	UPROPERTY(EditAnywhere)
 	float sprintSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float aimingSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float aimSensitivity;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StartSprint();
@@ -52,10 +65,13 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StopAim();
 
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	bool crouched;
+
+	bool aiming;
 };
