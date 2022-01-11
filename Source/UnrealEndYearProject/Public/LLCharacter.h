@@ -41,9 +41,6 @@ protected:
 	float normalFOV;
 
 	UPROPERTY(EditAnywhere)
-	FVector OriginalOffset;
-
-	UPROPERTY(EditAnywhere)
 	float sprintSpeed;
 
 	UPROPERTY(EditAnywhere)
@@ -56,18 +53,7 @@ protected:
 	float aimFOV;
 
 	UPROPERTY(EditAnywhere)
-	FVector cameraOffset;
-
-	UPROPERTY(EditAnywhere)
 	float fovChangeSpeed;
-
-	UPROPERTY(EditAnywhere)
-	float armLenghtChangeSpeed;
-
-	UPROPERTY(EditAnywhere)
-	float sprintArmLenght;
-
-	float originalArmLenght;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StartSprint();
