@@ -38,7 +38,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float normalSensitivity;
 
-	UPROPERTY(EditAnywhere)
 	float normalFOV;
 
 	UPROPERTY(EditAnywhere)
@@ -61,6 +60,14 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float fovChangeSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float armLenghtChangeSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float sprintArmLenght;
+
+	float originalArmLenght;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StartSprint();
@@ -92,4 +99,6 @@ public:
 	bool crouched;
 
 	bool aiming;
+
+	bool sprinting;
 };

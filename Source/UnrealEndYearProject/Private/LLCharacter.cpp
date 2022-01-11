@@ -18,7 +18,8 @@ void ALLCharacter::BeginPlay()
 	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 	
 	sensitivity = normalSensitivity;
-	PlayerCamera->SetFOV(normalFOV);
+	normalFOV = PlayerCamera->GetFOVAngle();
+	originalArmLenght = SpringArm->TargetArmLength;
 }
 
 void ALLCharacter::MoveForward(float value)
@@ -66,6 +67,8 @@ void ALLCharacter::Crouching()
 
 void ALLCharacter::StartSprint()
 {	
+	sprinting = true;
+
 	if (!aiming) 
 	{
 		StopCrouch();
@@ -75,6 +78,8 @@ void ALLCharacter::StartSprint()
 
 void ALLCharacter::StopSprint()
 {
+	sprinting = false;
+
 	if (!aiming)
 		GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 }
@@ -92,6 +97,7 @@ void ALLCharacter::StartAim()
 {
 	bUseControllerRotationYaw = true;
 	aiming = true;
+	StopSprint();
 	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
 	sensitivity = aimSensitivity;
 	SpringArm->AddLocalOffset(cameraOffset);
@@ -120,6 +126,18 @@ void ALLCharacter::Tick(float DeltaTime)
 	{
 		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), normalFOV, DeltaTime, fovChangeSpeed);
 		PlayerCamera->SetFOV(NewFOV);		
+	}
+
+	if (sprinting)
+	{
+		float NewArmLenght = FMath::FInterpTo(SpringArm->TargetArmLength, sprintArmLenght, DeltaTime, armLenghtChangeSpeed);
+		SpringArm->TargetArmLength = NewArmLenght;
+	}
+
+	if (!sprinting)
+	{
+		float NewArmLenght = FMath::FInterpTo(SpringArm->TargetArmLength, originalArmLenght, DeltaTime, armLenghtChangeSpeed);
+		SpringArm->TargetArmLength = NewArmLenght;
 	}
 }
 
