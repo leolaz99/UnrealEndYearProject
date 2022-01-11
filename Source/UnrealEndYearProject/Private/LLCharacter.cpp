@@ -1,5 +1,7 @@
 #include "LLCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 
 ALLCharacter::ALLCharacter()
 {
@@ -10,9 +12,13 @@ ALLCharacter::ALLCharacter()
 void ALLCharacter::BeginPlay()
 {
 	Super::BeginPlay();	
-
+	
+	PlayerCamera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+	SpringArm = FindComponentByClass<USpringArmComponent>();
 	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	
 	sensitivity = normalSensitivity;
+	PlayerCamera->SetFOV(normalFOV);
 }
 
 void ALLCharacter::MoveForward(float value)
@@ -47,7 +53,7 @@ void ALLCharacter::StartCrouch()
 void ALLCharacter::StopCrouch()
 {
 	crouched = false;
-	GetCharacterMovement()->bWantsToCrouch = false;		
+	GetCharacterMovement()->bWantsToCrouch = false;
 }
 
 void ALLCharacter::Crouching()
@@ -88,6 +94,7 @@ void ALLCharacter::StartAim()
 	aiming = true;
 	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
 	sensitivity = aimSensitivity;
+	SpringArm->AddLocalOffset(cameraOffset);
 }
 
 void ALLCharacter::StopAim()
@@ -96,11 +103,24 @@ void ALLCharacter::StopAim()
 	aiming = false;
 	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 	sensitivity = normalSensitivity;
+	SpringArm->AddLocalOffset(OriginalOffset);
 }
 
 void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (aiming)
+	{
+		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), aimFOV, DeltaTime, fovChangeSpeed);
+		PlayerCamera->SetFOV(NewFOV);	
+	}
+
+	if (!aiming)
+	{
+		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), normalFOV, DeltaTime, fovChangeSpeed);
+		PlayerCamera->SetFOV(NewFOV);		
+	}
 }
 
 void ALLCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

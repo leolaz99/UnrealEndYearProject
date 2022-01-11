@@ -39,6 +39,12 @@ protected:
 	float normalSensitivity;
 
 	UPROPERTY(EditAnywhere)
+	float normalFOV;
+
+	UPROPERTY(EditAnywhere)
+	FVector OriginalOffset;
+
+	UPROPERTY(EditAnywhere)
 	float sprintSpeed;
 
 	UPROPERTY(EditAnywhere)
@@ -46,6 +52,15 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float aimSensitivity;
+
+	UPROPERTY(EditAnywhere)
+	float aimFOV;
+
+	UPROPERTY(EditAnywhere)
+	FVector cameraOffset;
+
+	UPROPERTY(EditAnywhere)
+	float fovChangeSpeed;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StartSprint();
@@ -64,6 +79,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StopAim();
+
+	APlayerCameraManager* PlayerCamera;
+	USpringArmComponent* SpringArm;
 
 
 public:	
