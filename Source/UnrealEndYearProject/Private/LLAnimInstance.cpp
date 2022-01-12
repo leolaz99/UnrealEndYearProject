@@ -34,8 +34,17 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			ActualSpeed = currentSpeed;	
 			Direction = CalculateDirection(speed, rotation);
 		}
+
+		isRolling = characterInstance->roll;
 	}
 
 	else
 		UE_LOG(LogTemp, Error, TEXT("Missing Pawn Owner! - ULLAnimInstance::NativeUpdateAnimation"));
+}
+
+void ULLAnimInstance::CheckRoll()
+{
+	APawn* pawnOwner = TryGetPawnOwner();
+	ALLCharacter* characterInstance = Cast<ALLCharacter>(pawnOwner);
+	characterInstance->roll = false;
 }

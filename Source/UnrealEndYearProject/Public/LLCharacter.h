@@ -87,4 +87,6 @@ public:
 	bool aiming;
 
 	bool sprinting;
+
+	bool roll;
 };

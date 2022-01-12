@@ -18,6 +18,9 @@ protected:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void CheckRoll();
+
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float ActualSpeed;
 
@@ -29,4 +32,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isAiming;
+
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	bool isRolling;
 };
