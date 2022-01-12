@@ -23,28 +23,22 @@ void ALLCharacter::BeginPlay()
 
 void ALLCharacter::MoveForward(float value)
 {
-	if (!roll)
-	{
-		FRotator rotation = GetControlRotation();
-		FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
+	FRotator rotation = GetControlRotation();
+	FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
 
-		FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-		AddMovementInput(Direction * value);
-	}
+	AddMovementInput(Direction * value);
 }
 
 void ALLCharacter::MoveHorizontal(float value)
 {
-	if (!roll)
-	{
-		FRotator rotation = GetControlRotation();
-		FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
+	FRotator rotation = GetControlRotation();
+	FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
 
-		FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		AddMovementInput(Direction * value);
-	}
+	AddMovementInput(Direction * value);
 }
 
 void ALLCharacter::StartCrouch()
@@ -64,26 +58,20 @@ void ALLCharacter::StopCrouch()
 
 void ALLCharacter::Crouching()
 {
-	if (!roll)
-	{
-		if (!GetCharacterMovement()->IsCrouching())
-			StartCrouch();
-		else
-			StopCrouch();
-	}
+	if (!GetCharacterMovement()->IsCrouching())
+		StartCrouch();
+	else
+		StopCrouch();
 }
 
 void ALLCharacter::StartSprint()
 {
-	if (!roll)
-	{
-		sprinting = true;
+	sprinting = true;
 
-		if (!aiming)
-		{
-			StopCrouch();
-			GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
-		}
+	if (!aiming)
+	{
+		StopCrouch();
+		GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
 	}
 }
 
@@ -97,23 +85,16 @@ void ALLCharacter::StopSprint()
 
 void ALLCharacter::Rolling()
 {
-	if (!roll) 
-	{
-		StopAim();
-		roll = true;
-	}	
+	StopSprint();
+	StopAim();
+	roll = true;	
 }
 
 void ALLCharacter::StartAim()
 {
-	if (!roll)
-	{
-		bUseControllerRotationYaw = true;
-		aiming = true;
-		StopSprint();
-		GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;
-		sensitivity = aimSensitivity;
-	}
+	aiming = true;
+	StopSprint();
+	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
 }
 
 void ALLCharacter::StopAim()
@@ -128,13 +109,15 @@ void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (aiming)
+	if (aiming && !roll)
 	{
+		sensitivity = aimSensitivity;
+		bUseControllerRotationYaw = true;
 		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), aimFOV, DeltaTime, fovChangeSpeed);
 		PlayerCamera->SetFOV(NewFOV);	
 	}
 
-	if (!aiming)
+	if (!aiming || roll)
 	{
 		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), normalFOV, DeltaTime, fovChangeSpeed);
 		PlayerCamera->SetFOV(NewFOV);		
