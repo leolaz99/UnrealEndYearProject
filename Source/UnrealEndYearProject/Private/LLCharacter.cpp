@@ -85,9 +85,12 @@ void ALLCharacter::StopSprint()
 
 void ALLCharacter::Rolling()
 {
-	StopSprint();
-	StopAim();
-	roll = true;	
+	if (!roll)
+	{
+		StopSprint();
+		StopAim();
+		roll = true;
+	}
 }
 
 void ALLCharacter::StartAim()

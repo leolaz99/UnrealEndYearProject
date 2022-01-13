@@ -35,4 +35,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isRolling;
+
+	ALLCharacter* characterInstance;
+	APawn* pawnOwner;
 };
