@@ -35,10 +35,19 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 
 		isRolling = characterInstance->roll;
+
+		AimingAimOffset();
 	}
 }
 
 void ULLAnimInstance::CheckRoll()
 {
 	characterInstance->roll = false;
+}
+
+void ULLAnimInstance::AimingAimOffset()
+{
+	FRotator controlRotation = characterInstance->GetControlRotation();
+	controlRotation.Normalize();
+	ActualPitch = controlRotation.Pitch;
 }

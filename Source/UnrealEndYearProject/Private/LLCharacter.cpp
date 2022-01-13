@@ -1,5 +1,6 @@
 #include "LLCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -24,21 +25,22 @@ void ALLCharacter::BeginPlay()
 void ALLCharacter::MoveForward(float value)
 {
 	FRotator rotation = GetControlRotation();
-	FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
+	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
-	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-	AddMovementInput(Direction * value);
+	FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
+	UCharacterMovementComponent* movComp = GetCharacterMovement();
+	movComp->AddInputVector(directionVector * value, false);
 }
 
 void ALLCharacter::MoveHorizontal(float value)
 {
 	FRotator rotation = GetControlRotation();
-	FRotator YawRotation = FRotator(0.f, rotation.Yaw, 0.f);
-
-	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-	AddMovementInput(Direction * value);
+	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
+	
+	FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
+	UCharacterMovementComponent* movComp = GetCharacterMovement();
+	movComp->AddInputVector(directionVector * value, false);
+	
 }
 
 void ALLCharacter::StartCrouch()
@@ -67,6 +69,7 @@ void ALLCharacter::Crouching()
 void ALLCharacter::StartSprint()
 {
 	sprinting = true;
+	StopAim();
 
 	if (!aiming)
 	{
@@ -87,6 +90,10 @@ void ALLCharacter::Rolling()
 {
 	if (!roll)
 	{
+		FVector RollDirection = GetLastMovementInputVector();
+		FRotator MovementRotation = RollDirection.Rotation();
+		SetActorRotation(MovementRotation);
+
 		StopSprint();
 		StopAim();
 		roll = true;
@@ -102,9 +109,11 @@ void ALLCharacter::StartAim()
 
 void ALLCharacter::StopAim()
 {
+	if(!sprinting)
+		GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	
 	bUseControllerRotationYaw = false;
-	aiming = false;
-	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
+	aiming = false;	
 	sensitivity = normalSensitivity;
 }
 
