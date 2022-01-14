@@ -8,9 +8,13 @@ ULLAnimInstance::ULLAnimInstance()
 
 void ULLAnimInstance::NativeInitializeAnimation()
 {
+	Super::NativeInitializeAnimation();
+	
 	pawnOwner = TryGetPawnOwner();
 	characterInstance = Cast<ALLCharacter>(pawnOwner);
-	Super::NativeInitializeAnimation();
+
+	if(characterInstance != nullptr)
+		oldRotation = characterInstance->GetControlRotation().Pitch;	
 }
 
 void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -36,7 +40,7 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 		isRolling = characterInstance->roll;
 
-		AimingAimOffset();
+		AimingAimOffset(DeltaSeconds);
 	}
 }
 
@@ -45,9 +49,10 @@ void ULLAnimInstance::CheckRoll()
 	characterInstance->roll = false;
 }
 
-void ULLAnimInstance::AimingAimOffset()
+void ULLAnimInstance::AimingAimOffset(float deltaTime)
 {
 	FRotator controlRotation = characterInstance->GetControlRotation();
 	controlRotation.Normalize();
-	ActualPitch = controlRotation.Pitch;
+	ActualPitch = FMath::FInterpTo(controlRotation.Pitch, oldRotation, deltaTime, 1.f);
+	oldRotation = ActualPitch;
 }

@@ -62,6 +62,9 @@ protected:
 	void StartSprint();
 
 	UFUNCTION(BlueprintCallable, Category = LL)
+	void Shooting();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
 	void StopSprint();
 
 	UFUNCTION(BlueprintCallable, Category = LL)
@@ -75,6 +78,9 @@ protected:
 
 	APlayerCameraManager* PlayerCamera;
 	USpringArmComponent* SpringArm;
+
+	UPROPERTY(BlueprintReadWrite, Category = LL)
+	USkeletalMeshComponent* rifleRef;
 
 
 public:	

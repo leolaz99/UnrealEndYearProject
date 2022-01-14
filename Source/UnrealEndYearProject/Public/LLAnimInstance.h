@@ -21,7 +21,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void CheckRoll();
 
-	void AimingAimOffset();
+	void AimingAimOffset(float deltaTime);
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float ActualSpeed;
@@ -40,6 +40,8 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isRolling;
+
+	float oldRotation;
 
 	ALLCharacter* characterInstance;
 	APawn* pawnOwner;

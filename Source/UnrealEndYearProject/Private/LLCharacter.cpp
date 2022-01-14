@@ -4,6 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "DrawDebugHelpers.h"
 
 ALLCharacter::ALLCharacter()
 {
@@ -18,6 +19,10 @@ void ALLCharacter::BeginPlay()
 	
 	PlayerCamera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
 	SpringArm = FindComponentByClass<USpringArmComponent>();
+	TArray<UActorComponent*> rifles = GetComponentsByTag(USkeletalMeshComponent::StaticClass(), "Muzzle");
+	if (rifles.Num() > 0) 
+		rifleRef = Cast<USkeletalMeshComponent>(rifles[0]);
+
 	GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 	
 	sensitivity = normalSensitivity;
@@ -82,6 +87,29 @@ void ALLCharacter::StartSprint()
 	{
 		StopCrouch();
 		GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+	}
+}
+
+void ALLCharacter::Shooting()
+{
+	if (aiming)
+	{
+		FVector cameraPos = PlayerCamera->GetActorForwardVector();
+		FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
+
+		FHitResult outHit;
+		FVector start = muzzlePos.GetLocation();
+		FVector end = (cameraPos * 10000) + start;
+		FCollisionQueryParams params;
+
+		DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
+		bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
+
+		if (isHit)
+		{
+			if (GEngine)
+				GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT")));
+		}
 	}
 }
 
