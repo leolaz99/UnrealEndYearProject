@@ -9,6 +9,7 @@ ALLCharacter::ALLCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	normalSensitivity = 1.f;
+	roll = false;
 }
 
 void ALLCharacter::BeginPlay()
@@ -45,7 +46,7 @@ void ALLCharacter::MoveHorizontal(float horizontalAxis)
 
 void ALLCharacter::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
 {
-	if ((verticalAxisValue <= 0 && horizontalAxisValue <= 0) && sprinting == true)
+	if (verticalAxisValue == 0 && horizontalAxisValue == 0 && sprinting == true)
 		StopSprint();
 }
 
@@ -96,7 +97,7 @@ void ALLCharacter::Rolling()
 {
 	FVector rollDirection = GetLastMovementInputVector();
 	
-	if (!roll && !rollDirection.IsZero())
+	if (roll == false && !rollDirection.IsZero())
 	{
 		FRotator MovementRotation = rollDirection.Rotation();
 		SetActorRotation(MovementRotation);
