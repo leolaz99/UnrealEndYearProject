@@ -2,6 +2,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 
 ALLCharacter::ALLCharacter()
@@ -22,25 +23,30 @@ void ALLCharacter::BeginPlay()
 	normalFOV = PlayerCamera->GetFOVAngle();
 }
 
-void ALLCharacter::MoveForward(float value)
+void ALLCharacter::MoveForward(float verticalAxis)
 {
 	FRotator rotation = GetControlRotation();
 	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
 	FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
 	UCharacterMovementComponent* movComp = GetCharacterMovement();
-	movComp->AddInputVector(directionVector * value, false);
+	movComp->AddInputVector(directionVector * verticalAxis, false);
 }
 
-void ALLCharacter::MoveHorizontal(float value)
+void ALLCharacter::MoveHorizontal(float horizontalAxis)
 {
 	FRotator rotation = GetControlRotation();
 	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 	
 	FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
 	UCharacterMovementComponent* movComp = GetCharacterMovement();
-	movComp->AddInputVector(directionVector * value, false);
-	
+	movComp->AddInputVector(directionVector * horizontalAxis, false);
+}
+
+void ALLCharacter::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
+{
+	if ((verticalAxisValue <= 0 && horizontalAxisValue <= 0) && sprinting == true)
+		StopSprint();
 }
 
 void ALLCharacter::StartCrouch()
@@ -88,10 +94,11 @@ void ALLCharacter::StopSprint()
 
 void ALLCharacter::Rolling()
 {
-	if (!roll)
+	FVector rollDirection = GetLastMovementInputVector();
+	
+	if (!roll && !rollDirection.IsZero())
 	{
-		FVector RollDirection = GetLastMovementInputVector();
-		FRotator MovementRotation = RollDirection.Rotation();
+		FRotator MovementRotation = rollDirection.Rotation();
 		SetActorRotation(MovementRotation);
 
 		StopSprint();

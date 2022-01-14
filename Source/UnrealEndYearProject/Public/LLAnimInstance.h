@@ -27,7 +27,7 @@ protected:
 	float ActualSpeed;
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
-	float Direction;
+	float ActualDirection;
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isCrouching;

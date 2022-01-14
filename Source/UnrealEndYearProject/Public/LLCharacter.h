@@ -17,10 +17,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveForward(float value);
+	void MoveForward(float verticalAxis);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveHorizontal(float value);
+	void MoveHorizontal(float horizontalAxis);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void CheckSprint(float verticalAxisValue, float horizontalAxisValue);
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float sensitivity;

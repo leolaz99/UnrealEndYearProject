@@ -26,12 +26,12 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 		if (charMov) 
 		{
-			const FVector speed = pawnOwner->GetVelocity();
-			const FRotator rotation = pawnOwner->GetActorRotation();
+			FVector speed = pawnOwner->GetVelocity();
+			FRotator rotation = pawnOwner->GetActorRotation();
 
-			const float currentSpeed = speed.Size();	
+			float currentSpeed = speed.Size();	
 			ActualSpeed = currentSpeed;	
-			Direction = CalculateDirection(speed, rotation);
+			ActualDirection = CalculateDirection(speed, rotation);
 		}
 
 		isRolling = characterInstance->roll;
