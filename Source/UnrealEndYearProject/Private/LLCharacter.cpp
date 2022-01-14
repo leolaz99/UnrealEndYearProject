@@ -90,29 +90,6 @@ void ALLCharacter::StartSprint()
 	}
 }
 
-void ALLCharacter::Shooting()
-{
-	if (aiming)
-	{
-		FVector cameraPos = PlayerCamera->GetActorForwardVector();
-		FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
-
-		FHitResult outHit;
-		FVector start = muzzlePos.GetLocation();
-		FVector end = (cameraPos * 10000) + start;
-		FCollisionQueryParams params;
-
-		DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
-		bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
-
-		if (isHit)
-		{
-			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT %s"), *outHit.BoneName.ToString()));
-		}
-	}
-}
-
 void ALLCharacter::StopSprint()
 {
 	sprinting = false;
@@ -151,6 +128,40 @@ void ALLCharacter::StopAim()
 	bUseControllerRotationYaw = false;
 	aiming = false;	
 	sensitivity = normalSensitivity;
+}
+
+void ALLCharacter::StartFire()
+{
+	if (aiming)
+	{
+		FireShot();
+		GetWorldTimerManager().SetTimer(handle, this, &ALLCharacter::FireShot, fireRate, true);
+	}
+}
+
+void ALLCharacter::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(handle);
+}
+
+void ALLCharacter::FireShot()
+{
+	FVector cameraPos = PlayerCamera->GetActorForwardVector();
+	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
+
+	FHitResult outHit;
+	FVector start = muzzlePos.GetLocation();
+	FVector end = (cameraPos * 10000) + start;
+	FCollisionQueryParams params;
+
+	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
+	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
+
+	if (isHit)
+	{
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT %s"), *outHit.BoneName.ToString()));
+	}
 }
 
 void ALLCharacter::Tick(float DeltaTime)

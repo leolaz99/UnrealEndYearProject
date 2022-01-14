@@ -62,9 +62,6 @@ protected:
 	void StartSprint();
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void Shooting();
-
-	UFUNCTION(BlueprintCallable, Category = LL)
 	void StopSprint();
 
 	UFUNCTION(BlueprintCallable, Category = LL)
@@ -75,6 +72,19 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StopAim();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void StartFire();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void StopFire();
+
+	void FireShot();
+
+	UPROPERTY(EditAnywhere)
+	float fireRate;
+
+	FTimerHandle handle;
 
 	APlayerCameraManager* PlayerCamera;
 	USpringArmComponent* SpringArm;
