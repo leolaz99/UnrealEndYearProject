@@ -67,9 +67,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void Rolling();
 
-	UPROPERTY(EditAnywhere)
-	float rollingDistance = 6000.f;
-
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void StartAim();
 
