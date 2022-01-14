@@ -108,7 +108,7 @@ void ALLCharacter::Shooting()
 		if (isHit)
 		{
 			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT")));
+				GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT %s"), *outHit.BoneName.ToString()));
 		}
 	}
 }

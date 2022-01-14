@@ -78,8 +78,6 @@ protected:
 
 	APlayerCameraManager* PlayerCamera;
 	USpringArmComponent* SpringArm;
-
-	UPROPERTY(BlueprintReadWrite, Category = LL)
 	USkeletalMeshComponent* rifleRef;
 
 
