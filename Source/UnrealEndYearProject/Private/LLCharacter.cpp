@@ -146,6 +146,12 @@ void ALLCharacter::StopFire()
 
 void ALLCharacter::FireShot()
 {
+	float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
+	AddControllerPitchInput(randomPitch);
+
+	float randomYaw= -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
+	AddControllerYawInput(randomYaw);
+
 	FVector cameraPos = PlayerCamera->GetActorForwardVector();
 	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
