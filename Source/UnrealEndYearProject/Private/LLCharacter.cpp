@@ -199,9 +199,8 @@ void ALLCharacter::FireShot()
 		
 		if (enemyAttribute->CurrentHealth <= 0)
 		{
+			outHit.GetActor()->Destroy();
 			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("vita a 0")));
-			USkeletalMeshComponent* enemyMesh = outHit.GetActor()->FindComponentByClass<USkeletalMeshComponent>();
-			enemyMesh->SetSimulatePhysics(true);
 		}
 			
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Damage")));
