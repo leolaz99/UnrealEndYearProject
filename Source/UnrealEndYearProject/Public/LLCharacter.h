@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "LLAttributes.h"
 #include "LLCharacter.generated.h"
 
 UCLASS()
@@ -18,6 +19,12 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void MoveForward(float verticalAxis);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void MoveCameraVertical(float axisValue);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void MoveCameraHorizontal(float axisValue);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void MoveHorizontal(float horizontalAxis);
@@ -84,12 +91,18 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float fireRate;
 
+	UPROPERTY(EditAnywhere)
+	float range;
+
+	float actualVerticalAxis;
+	float actualHorizontalAxis;
+
 	FTimerHandle handle;
 
 	APlayerCameraManager* PlayerCamera;
 	USpringArmComponent* SpringArm;
 	USkeletalMeshComponent* rifleRef;
-
+	ULLAttributes* attributes;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

@@ -5,6 +5,9 @@
 #include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "DrawDebugHelpers.h"
+#include "IDamagable.h"
+#include "LLEnemy.h"
+#include "LLAttributes.h"
 
 ALLCharacter::ALLCharacter()
 {
@@ -27,10 +30,14 @@ void ALLCharacter::BeginPlay()
 	
 	sensitivity = normalSensitivity;
 	normalFOV = PlayerCamera->GetFOVAngle();
+
+	attributes = FindComponentByClass<ULLAttributes>();
 }
 
 void ALLCharacter::MoveForward(float verticalAxis)
 {
+	actualVerticalAxis = verticalAxis;
+
 	FRotator rotation = GetControlRotation();
 	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
@@ -39,8 +46,22 @@ void ALLCharacter::MoveForward(float verticalAxis)
 	movComp->AddInputVector(directionVector * verticalAxis, false);
 }
 
+void ALLCharacter::MoveCameraVertical(float axisValue)
+{
+	float verticalSpeed = axisValue * sensitivity;
+	AddControllerPitchInput(verticalSpeed);
+}
+
+void ALLCharacter::MoveCameraHorizontal(float axisValue)
+{
+	float horizontalSpeed = axisValue * sensitivity;
+	AddControllerYawInput(horizontalSpeed);
+}
+
 void ALLCharacter::MoveHorizontal(float horizontalAxis)
 {
+	actualHorizontalAxis = horizontalAxis;
+
 	FRotator rotation = GetControlRotation();
 	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 	
@@ -147,17 +168,17 @@ void ALLCharacter::StopFire()
 void ALLCharacter::FireShot()
 {
 	float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
-	AddControllerPitchInput(randomPitch);
+	float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
 
-	float randomYaw= -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
+	AddControllerPitchInput(randomPitch);
 	AddControllerYawInput(randomYaw);
 
 	FVector cameraPos = PlayerCamera->GetActorForwardVector();
 	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
 	FHitResult outHit;
-	FVector start = muzzlePos.GetLocation();
-	FVector end = (cameraPos * 10000) + start;
+	FVector start = PlayerCamera->GetTransform().GetLocation();
+	FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
 	FCollisionQueryParams params;
 
 	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
@@ -166,13 +187,32 @@ void ALLCharacter::FireShot()
 	if (isHit)
 	{
 		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("HIT %s"), *outHit.BoneName.ToString()));
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("HIT")));
 	}
+
+	IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
+	
+	if(isDamagable)
+	{
+		ULLAttributes* enemyAttribute = outHit.GetActor()->FindComponentByClass<ULLAttributes>();
+		enemyAttribute->CurrentHealth = enemyAttribute->CurrentHealth - attributes->Damage;
+		
+		if (enemyAttribute->CurrentHealth <= 0)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("vita a 0")));
+			USkeletalMeshComponent* enemyMesh = outHit.GetActor()->FindComponentByClass<USkeletalMeshComponent>();
+			enemyMesh->SetSimulatePhysics(true);
+		}
+			
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Damage")));
+	}		
 }
 
 void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	CheckSprint(actualVerticalAxis, actualHorizontalAxis);
 
 	if (aiming && !roll)
 	{
