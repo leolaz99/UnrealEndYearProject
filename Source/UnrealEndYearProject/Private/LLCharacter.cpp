@@ -139,6 +139,7 @@ void ALLCharacter::StartAim()
 	aiming = true;
 	StopSprint();
 	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
 void ALLCharacter::StopAim()
@@ -149,6 +150,8 @@ void ALLCharacter::StopAim()
 	bUseControllerRotationYaw = false;
 	aiming = false;	
 	sensitivity = normalSensitivity;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 void ALLCharacter::StartFire()
@@ -176,8 +179,13 @@ void ALLCharacter::FireShot()
 	FVector cameraPos = PlayerCamera->GetActorForwardVector();
 	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
+	//FHitResult outHit;
+	//FVector start = PlayerCamera->GetTransform().GetLocation();
+	//FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
+	//FCollisionQueryParams params;
+
 	FHitResult outHit;
-	FVector start = PlayerCamera->GetTransform().GetLocation();
+	FVector start = muzzlePos.GetLocation();
 	FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
 	FCollisionQueryParams params;
 
