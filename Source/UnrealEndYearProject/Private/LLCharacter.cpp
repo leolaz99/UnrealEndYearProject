@@ -179,15 +179,15 @@ void ALLCharacter::FireShot()
 	FVector cameraPos = PlayerCamera->GetActorForwardVector();
 	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
-	//FHitResult outHit;
-	//FVector start = PlayerCamera->GetTransform().GetLocation();
-	//FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
-	//FCollisionQueryParams params;
-
 	FHitResult outHit;
-	FVector start = muzzlePos.GetLocation();
+	FVector start = PlayerCamera->GetTransform().GetLocation();
 	FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
 	FCollisionQueryParams params;
+
+	//FHitResult outHit;
+	//FVector start = muzzlePos.GetLocation();
+	//FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
+	//FCollisionQueryParams params;
 
 	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
