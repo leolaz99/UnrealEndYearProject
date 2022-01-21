@@ -180,14 +180,9 @@ void ALLCharacter::FireShot()
 	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
 	FHitResult outHit;
-	FVector start = PlayerCamera->GetTransform().GetLocation();
-	FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
+	const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
+	const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
 	FCollisionQueryParams params;
-
-	//FHitResult outHit;
-	//FVector start = muzzlePos.GetLocation();
-	//FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
-	//FCollisionQueryParams params;
 
 	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
@@ -203,9 +198,9 @@ void ALLCharacter::FireShot()
 	if(isDamagable)
 	{
 		ULLAttributes* enemyAttribute = outHit.GetActor()->FindComponentByClass<ULLAttributes>();
-		enemyAttribute->CurrentHealth = enemyAttribute->CurrentHealth - attributes->Damage;
+		enemyAttribute->AddHealth(-attributes->Damage);
 		
-		if (enemyAttribute->CurrentHealth <= 0)
+		if (enemyAttribute->GetCurrentHealth() <= 0)
 		{
 			outHit.GetActor()->Destroy();
 			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("vita a 0")));

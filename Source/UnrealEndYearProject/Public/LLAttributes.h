@@ -4,6 +4,8 @@
 #include "Components/ActorComponent.h"
 #include "LLAttributes.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, newVal);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API ULLAttributes : public UActorComponent
 {
@@ -21,8 +23,22 @@ public:
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void AddHealth(const float value);
+
+	UFUNCTION(BlueprintPure, Category = LL)
+	float GetCurrentHealth() const 
+	{
+		return CurrentHealth;
+	}
+
+	UPROPERTY(BlueprintAssignable, Category = LL)
+	FOnHealthChanged OnHealthChanged;
+
 	UPROPERTY(EditAnywhere)
 	float Damage;
+
+protected: 
 
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth;

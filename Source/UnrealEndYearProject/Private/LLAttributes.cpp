@@ -15,3 +15,8 @@ void ULLAttributes::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
+void ULLAttributes::AddHealth(const float value)
+{
+	CurrentHealth += value;
+	OnHealthChanged.Broadcast(value);
+}
