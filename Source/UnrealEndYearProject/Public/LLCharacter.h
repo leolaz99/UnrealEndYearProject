@@ -103,6 +103,7 @@ protected:
 	USpringArmComponent* SpringArm;
 	USkeletalMeshComponent* rifleRef;
 	ULLAttributes* attributes;
+	UAnimMontage* fireMontage;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

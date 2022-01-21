@@ -14,6 +14,10 @@ ALLCharacter::ALLCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	normalSensitivity = 1.f;
 	roll = false;
+
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> FireMontageObject(TEXT("AnimMontage'/Game/3D/Animations/Player/Montages/Player_Aiming_Fire_AM.Player_Aiming_Fire_AM'"));
+	if (FireMontageObject.Succeeded())
+		fireMontage = FireMontageObject.Object;
 }
 
 void ALLCharacter::BeginPlay()
@@ -170,6 +174,7 @@ void ALLCharacter::StopFire()
 
 void ALLCharacter::FireShot()
 {
+	PlayAnimMontage(fireMontage, 1.f, FName("Default"));
 	float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
 	float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
 
