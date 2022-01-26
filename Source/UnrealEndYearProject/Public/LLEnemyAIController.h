@@ -18,7 +18,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void DetectPlayer(bool spotted);
+	void DetectPlayer();
 
 	UBehaviorTree* enemyBehaviorTree;
 
