@@ -14,10 +14,6 @@ ALLCharacter::ALLCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	normalSensitivity = 1.f;
 	roll = false;
-
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> FireMontageObject(TEXT("AnimMontage'/Game/3D/Animations/Player/Montages/Player_Aiming_Fire_AM.Player_Aiming_Fire_AM'"));
-	if (FireMontageObject.Succeeded())
-		fireMontage = FireMontageObject.Object;
 }
 
 void ALLCharacter::BeginPlay()

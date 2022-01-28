@@ -103,6 +103,8 @@ protected:
 	USpringArmComponent* SpringArm;
 	USkeletalMeshComponent* rifleRef;
 	ULLAttributes* attributes;
+
+	UPROPERTY(EditAnywhere)
 	UAnimMontage* fireMontage;
 
 public:	

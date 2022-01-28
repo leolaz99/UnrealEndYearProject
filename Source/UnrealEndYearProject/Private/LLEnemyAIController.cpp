@@ -1,21 +1,18 @@
-#include "BehaviorTree/BehaviorTree.h"
 #include "LLEnemyAIController.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "LLCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 ALLEnemyAIController::ALLEnemyAIController()
 {
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> enemyBehaviorTreeObject(TEXT("BehaviorTree'/Game/Enemy/BehaviourTree/BT_Enemy.BT_Enemy'"));
-	if (enemyBehaviorTreeObject.Succeeded())
-		enemyBehaviorTree = enemyBehaviorTreeObject.Object;
 }
 
 void ALLEnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	RunBehaviorTree(enemyBehaviorTree);
+	RunBehaviorTree(behaviorTree);
 }
 
 void ALLEnemyAIController::DetectPlayer()

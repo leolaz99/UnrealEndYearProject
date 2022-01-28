@@ -20,7 +20,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void DetectPlayer();
 
-	UBehaviorTree* enemyBehaviorTree;
+	UPROPERTY(EditAnywhere)
+	UBehaviorTree* behaviorTree;
 
 	bool isSpotted;
 };
