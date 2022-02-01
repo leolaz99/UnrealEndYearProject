@@ -5,9 +5,6 @@ void ULLPlayerAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 
-	pawnOwner = TryGetPawnOwner();
-	characterInstance = Cast<ALLCharacter>(pawnOwner);
-
 	if (characterInstance != nullptr)
 		oldRotation = characterInstance->GetControlRotation().Pitch;
 }
@@ -18,8 +15,6 @@ void ULLPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (pawnOwner != nullptr)
 	{
-		UCharacterMovementComponent* charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
-
 		isCrouching = characterInstance->crouched;
 		isAiming = characterInstance->aiming;
 		isRolling = characterInstance->roll;

@@ -26,4 +26,5 @@ protected:
 
 	APawn* pawnOwner;
 	ALLCharacter* characterInstance;
+	UCharacterMovementComponent* charMov;
 };

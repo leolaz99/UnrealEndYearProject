@@ -12,6 +12,7 @@ void ULLAnimInstance::NativeInitializeAnimation()
 
 	pawnOwner = TryGetPawnOwner();
 	characterInstance = Cast<ALLCharacter>(pawnOwner);
+	charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
 }
 
 void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -20,8 +21,6 @@ void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (pawnOwner != nullptr)
 	{
-		UCharacterMovementComponent* charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
-
 		if (charMov)
 		{
 			FVector speed = pawnOwner->GetVelocity();
