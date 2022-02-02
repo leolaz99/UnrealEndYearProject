@@ -12,7 +12,9 @@ void ULLAnimInstance::NativeInitializeAnimation()
 
 	pawnOwner = TryGetPawnOwner();
 	characterInstance = Cast<ALLCharacter>(pawnOwner);
-	charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
+
+	if(pawnOwner != nullptr)
+		charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();
 }
 
 void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
