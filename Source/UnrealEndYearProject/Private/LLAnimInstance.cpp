@@ -3,7 +3,6 @@
 
 ULLAnimInstance::ULLAnimInstance()
 {
-	ActualSpeed = 0.f;
 }
 
 void ULLAnimInstance::NativeInitializeAnimation()
@@ -20,17 +19,14 @@ void ULLAnimInstance::NativeInitializeAnimation()
 void ULLAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-
-	if (pawnOwner != nullptr)
+	
+	if (charMov)
 	{
-		if (charMov)
-		{
-			FVector speed = pawnOwner->GetVelocity();
-			FRotator rotation = pawnOwner->GetActorRotation();
+		FVector speed = pawnOwner->GetVelocity();
+		FRotator rotation = pawnOwner->GetActorRotation();
 
-			float currentSpeed = speed.Size();
-			ActualSpeed = currentSpeed;
-			ActualDirection = CalculateDirection(speed, rotation);
-		}
-	}
+		float currentSpeed = speed.Size();
+		ActualSpeed = currentSpeed;
+		ActualDirection = CalculateDirection(speed, rotation);
+	}	
 }
