@@ -14,4 +14,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float searchRadius;
+
+	UPROPERTY(EditAnywhere)
+	FName BlackboardTargetLocation;
 };

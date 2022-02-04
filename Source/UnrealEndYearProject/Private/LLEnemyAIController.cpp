@@ -23,6 +23,6 @@ void ALLEnemyAIController::DetectPlayer()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), classToFind, foundEnemies);
 
 	UBlackboardComponent* MyBlackboard = GetBlackboardComponent();
-	MyBlackboard->SetValueAsBool(FName("HasSpottedPlayer"), true);
-	MyBlackboard->SetValueAsObject(FName("Player"), foundEnemies[0]);
+	MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
+	MyBlackboard->SetValueAsObject(blackboardPlayer, foundEnemies[0]);
 }

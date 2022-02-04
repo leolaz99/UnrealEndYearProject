@@ -28,8 +28,7 @@ EBTNodeResult::Type ULLRandomLocation::ExecuteTask(UBehaviorTreeComponent& Owner
 
 				if (navSystem->GetRandomReachablePointInRadius(startPos, searchRadius, endPos))
 				{
-					blackBoard->SetValueAsVector("TargetLocation", endPos.Location);
-					
+					blackBoard->SetValueAsVector(BlackboardTargetLocation, endPos.Location);		
 				}
 			}
 		}

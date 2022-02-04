@@ -24,4 +24,10 @@ protected:
 	UBehaviorTree* behaviorTree;
 
 	bool isSpotted;
+
+	UPROPERTY(EditAnywhere)
+	FName blackboardPlayer;
+
+	UPROPERTY(EditAnywhere)
+	FName blackboardHasSpottedPlayer;
 };
