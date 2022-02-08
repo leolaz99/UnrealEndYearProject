@@ -13,6 +13,7 @@ void ALLEnemyAIController::BeginPlay()
 	Super::BeginPlay();
 
 	RunBehaviorTree(behaviorTree);
+	MyBlackboard = GetBlackboardComponent();
 }
 
 void ALLEnemyAIController::DetectPlayer()
@@ -22,7 +23,19 @@ void ALLEnemyAIController::DetectPlayer()
 	TArray<AActor*> foundEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), classToFind, foundEnemies);
 
-	UBlackboardComponent* MyBlackboard = GetBlackboardComponent();
 	MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
 	MyBlackboard->SetValueAsObject(blackboardPlayer, foundEnemies[0]);
+}
+
+void ALLEnemyAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	const APawn* controlledPawn = GetPawn();
+	const float distanceToPlayer = controlledPawn->GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	
+	if(distanceToPlayer <= attackRange)
+		MyBlackboard->SetValueAsBool(blackboardPlayerInRange, true);
+	else
+		MyBlackboard->SetValueAsBool(blackboardPlayerInRange, false);
 }

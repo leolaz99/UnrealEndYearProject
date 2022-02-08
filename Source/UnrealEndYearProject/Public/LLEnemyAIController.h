@@ -23,11 +23,22 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UBehaviorTree* behaviorTree;
 
+	UBlackboardComponent* MyBlackboard;
+
 	bool isSpotted;
+
+	UPROPERTY(EditAnywhere)
+	float attackRange;
 
 	UPROPERTY(EditAnywhere)
 	FName blackboardPlayer;
 
 	UPROPERTY(EditAnywhere)
 	FName blackboardHasSpottedPlayer;
+
+	UPROPERTY(EditAnywhere)
+	FName blackboardPlayerInRange;
+
+public:
+	virtual void Tick(float DeltaTime) override;
 };
