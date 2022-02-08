@@ -10,6 +10,12 @@ void ALLEnemy::BeginPlay()
 	Super::BeginPlay();
 }
 
+void ALLEnemy::AttackPlayer()
+{
+	if(attackPlayerMontage != nullptr)
+		PlayAnimMontage(attackPlayerMontage, 1.5f, FName("Default"));
+}
+
 void ALLEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

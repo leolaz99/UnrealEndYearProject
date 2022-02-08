@@ -15,11 +15,14 @@ public:
 	ALLEnemy();
 
 protected:
-	
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* attackPlayerMontage;
+
 public:	
-	
+	void AttackPlayer();
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
