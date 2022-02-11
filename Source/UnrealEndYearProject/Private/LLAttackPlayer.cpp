@@ -6,16 +6,24 @@ EBTNodeResult::Type ULLAttackPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
+	behaviourTree = &OwnerComp;
 	const AAIController* ownerController = OwnerComp.GetAIOwner();
 	APawn* ownerPawn = ownerController->GetPawn();
 
-	ALLEnemy* enemy = Cast<ALLEnemy>(ownerPawn);
-
-	FTimerHandle TimerHandle;
+	enemy = Cast<ALLEnemy>(ownerPawn);
 	
 	enemy->AttackPlayer();
 	
-	//delay
+	UAnimInstance* anim = enemy->GetMesh()->GetAnimInstance();
 
-	return EBTNodeResult::Succeeded;
+	anim->OnMontageEnded.AddDynamic(this, &ULLAttackPlayer::HandleMontageEnded);
+
+	return EBTNodeResult::InProgress;
+}
+
+void ULLAttackPlayer::HandleMontageEnded(UAnimMontage* animMontage, bool finished)
+{
+	UAnimInstance* anim = enemy->GetMesh()->GetAnimInstance();
+	anim->OnMontageEnded.RemoveAll(this);
+	FinishLatentTask(*behaviourTree, EBTNodeResult::Succeeded);
 }
