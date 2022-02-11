@@ -12,6 +12,17 @@
 				"Engine",
 				"AIModule"
 			]
+		},
+
+		{
+			"Name": "LLAIModule",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AIModule"
+			]
 		}
+
 	]
 }

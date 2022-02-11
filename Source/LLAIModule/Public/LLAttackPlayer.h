@@ -6,7 +6,7 @@
 #include "LLAttackPlayer.generated.h"
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ULLAttackPlayer : public UBTTaskNode
+class LLAIMODULE_API ULLAttackPlayer : public UBTTaskNode
 {
 	GENERATED_BODY()
 

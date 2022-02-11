@@ -5,7 +5,7 @@
 #include "LLRandomLocation.generated.h"
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ULLRandomLocation : public UBTTaskNode
+class LLAIMODULE_API ULLRandomLocation : public UBTTaskNode
 {
 	GENERATED_BODY()
 

@@ -7,7 +7,7 @@
 #include "LLEnemyAIController.generated.h"
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ALLEnemyAIController : public AAIController
+class LLAIMODULE_API ALLEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
 
