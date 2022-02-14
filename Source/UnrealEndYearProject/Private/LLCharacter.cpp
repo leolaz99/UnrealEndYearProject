@@ -199,15 +199,7 @@ void ALLCharacter::FireShot()
 	if(isDamagable)
 	{
 		ULLAttributes* enemyAttribute = outHit.GetActor()->FindComponentByClass<ULLAttributes>();
-		enemyAttribute->AddHealth(-attributes->Damage);
-		
-		if (enemyAttribute->GetCurrentHealth() <= 0)
-		{
-			outHit.GetActor()->Destroy();
-			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("vita a 0")));
-		}
-			
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Damage")));
+		enemyAttribute->RemoveHealth(attributes->Damage);
 	}		
 }
 

@@ -1,5 +1,4 @@
 #include "LLPlayerAnimInstance.h"
-#include "GameFramework\CharacterMovementComponent.h"
 
 void ULLPlayerAnimInstance::NativeInitializeAnimation()
 {

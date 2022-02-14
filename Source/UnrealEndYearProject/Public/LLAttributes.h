@@ -6,7 +6,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, newVal);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(LL), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API ULLAttributes : public UActorComponent
 {
 	GENERATED_BODY()
@@ -25,6 +25,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AddHealth(const float value);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void RemoveHealth(const float value);
 
 	UFUNCTION(BlueprintPure, Category = LL)
 	float GetCurrentHealth() const 
