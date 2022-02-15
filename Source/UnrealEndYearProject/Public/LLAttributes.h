@@ -24,15 +24,18 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void AddHealth(const float value);
-
-	UFUNCTION(BlueprintCallable, Category = LL)
 	void RemoveHealth(const float value);
 
 	UFUNCTION(BlueprintPure, Category = LL)
 	float GetCurrentHealth() const 
 	{
 		return CurrentHealth;
+	}
+
+	UFUNCTION(BlueprintPure, Category = LL)
+	float GetDamage() const
+	{
+		return Damage;
 	}
 
 	UPROPERTY(BlueprintAssignable, Category = LL)

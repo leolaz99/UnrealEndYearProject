@@ -16,17 +16,10 @@ void ULLAttributes::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void ULLAttributes::AddHealth(const float value)
-{
-	
-}
-
 void ULLAttributes::RemoveHealth(const float value)
 {
 	CurrentHealth -= value;
 	OnHealthChanged.Broadcast(value);
-
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Damage")));
 
 	if (GetCurrentHealth() <= 0)
 	{
@@ -34,8 +27,8 @@ void ULLAttributes::RemoveHealth(const float value)
 		UCapsuleComponent* capsule = GetOwner()->FindComponentByClass<UCapsuleComponent>();
 
 		mesh->SetSimulatePhysics(true);
-		capsule->DestroyComponent(true);
-
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("vita a 0")));
+		
+		if(capsule != nullptr)
+			capsule->DestroyComponent(true);
 	}
 }

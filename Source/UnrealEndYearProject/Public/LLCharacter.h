@@ -13,6 +13,18 @@ class UNREALENDYEARPROJECT_API ALLCharacter : public ACharacter
 
 public:
 	ALLCharacter();
+	
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	bool crouched;
+
+	bool aiming;
+
+	bool sprinting;
+
+	bool roll;
 
 protected:
 	virtual void BeginPlay() override;
@@ -106,17 +118,4 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* fireMontage;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	bool crouched;
-
-	bool aiming;
-
-	bool sprinting;
-
-	bool roll;
 };

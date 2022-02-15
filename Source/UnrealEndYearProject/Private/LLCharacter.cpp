@@ -1,6 +1,7 @@
 #include "LLCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
 #include "Math/Vector.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -188,18 +189,11 @@ void ALLCharacter::FireShot()
 	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
 	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
 
-	if (isHit)
-	{
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, FString::Printf(TEXT("HIT")));
-	}
-
 	IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
 	
 	if(isDamagable)
 	{
-		ULLAttributes* enemyAttribute = outHit.GetActor()->FindComponentByClass<ULLAttributes>();
-		enemyAttribute->RemoveHealth(attributes->Damage);
+		UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->Damage, NULL, NULL, NULL);
 	}		
 }
 
