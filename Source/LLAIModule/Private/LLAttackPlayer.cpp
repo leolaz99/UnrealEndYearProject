@@ -1,6 +1,7 @@
 #include "LLAttackPlayer.h"
 #include "LLEnemy.h"
 #include "AIController.h"
+#include "LLAttributes.h"
 
 EBTNodeResult::Type ULLAttackPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -12,12 +13,18 @@ EBTNodeResult::Type ULLAttackPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 
 	enemy = Cast<ALLEnemy>(ownerPawn);
 	
-	enemy->AttackPlayer();
+	ULLAttributes* attributes;
+	attributes = enemy->FindComponentByClass<ULLAttributes>();
+
+	if(attributes->GetCurrentHealth() > 0)
+	{
+		enemy->AttackPlayer();
+
+		UAnimInstance* anim = enemy->GetMesh()->GetAnimInstance();
+
+		anim->OnMontageEnded.AddDynamic(this, &ULLAttackPlayer::HandleMontageEnded);
+	}
 	
-	UAnimInstance* anim = enemy->GetMesh()->GetAnimInstance();
-
-	anim->OnMontageEnded.AddDynamic(this, &ULLAttackPlayer::HandleMontageEnded);
-
 	return EBTNodeResult::InProgress;
 }
 

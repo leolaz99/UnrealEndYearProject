@@ -45,7 +45,6 @@ public:
 	float Damage;
 
 protected: 
-
 	UPROPERTY(EditAnywhere)
 	float CurrentHealth;
 };

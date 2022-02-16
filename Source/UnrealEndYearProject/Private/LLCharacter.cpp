@@ -37,14 +37,17 @@ void ALLCharacter::BeginPlay()
 
 void ALLCharacter::MoveForward(float verticalAxis)
 {
-	actualVerticalAxis = verticalAxis;
+	if (attributes->GetCurrentHealth() > 0)
+	{
+		actualVerticalAxis = verticalAxis;
 
-	FRotator rotation = GetControlRotation();
-	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
+		FRotator rotation = GetControlRotation();
+		FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
-	FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
-	UCharacterMovementComponent* movComp = GetCharacterMovement();
-	movComp->AddInputVector(directionVector * verticalAxis, false);
+		FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
+		UCharacterMovementComponent* movComp = GetCharacterMovement();
+		movComp->AddInputVector(directionVector * verticalAxis, false);
+	}
 }
 
 void ALLCharacter::MoveCameraVertical(float axisValue)
@@ -61,14 +64,17 @@ void ALLCharacter::MoveCameraHorizontal(float axisValue)
 
 void ALLCharacter::MoveHorizontal(float horizontalAxis)
 {
-	actualHorizontalAxis = horizontalAxis;
+	if (attributes->GetCurrentHealth() > 0)
+	{
+		actualHorizontalAxis = horizontalAxis;
 
-	FRotator rotation = GetControlRotation();
-	FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
-	
-	FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
-	UCharacterMovementComponent* movComp = GetCharacterMovement();
-	movComp->AddInputVector(directionVector * horizontalAxis, false);
+		FRotator rotation = GetControlRotation();
+		FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
+
+		FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
+		UCharacterMovementComponent* movComp = GetCharacterMovement();
+		movComp->AddInputVector(directionVector * horizontalAxis, false);
+	}
 }
 
 void ALLCharacter::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
@@ -94,21 +100,27 @@ void ALLCharacter::StopCrouch()
 
 void ALLCharacter::Crouching()
 {
-	if (!GetCharacterMovement()->IsCrouching())
-		StartCrouch();
-	else
-		StopCrouch();
+	if (attributes->GetCurrentHealth() > 0)
+	{
+		if (!GetCharacterMovement()->IsCrouching())
+			StartCrouch();
+		else
+			StopCrouch();
+	}
 }
 
 void ALLCharacter::StartSprint()
 {
-	sprinting = true;
-	StopAim();
-
-	if (!aiming)
+	if (attributes->GetCurrentHealth() > 0)
 	{
-		StopCrouch();
-		GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+		sprinting = true;
+		StopAim();
+
+		if (!aiming)
+		{
+			StopCrouch();
+			GetCharacterMovement()->MaxWalkSpeed = sprintSpeed;
+		}
 	}
 }
 
@@ -137,10 +149,13 @@ void ALLCharacter::Rolling()
 
 void ALLCharacter::StartAim()
 {
-	aiming = true;
-	StopSprint();
-	GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;	
-	GetCharacterMovement()->bOrientRotationToMovement = false;
+	if (attributes->GetCurrentHealth() > 0)
+	{
+		aiming = true;
+		StopSprint();
+		GetCharacterMovement()->MaxWalkSpeed = aimingSpeed;
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+	}
 }
 
 void ALLCharacter::StopAim()
@@ -171,30 +186,33 @@ void ALLCharacter::StopFire()
 
 void ALLCharacter::FireShot()
 {
-	PlayAnimMontage(fireMontage, 1.f, FName("Default"));
-	float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
-	float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
-
-	AddControllerPitchInput(randomPitch);
-	AddControllerYawInput(randomYaw);
-
-	FVector cameraPos = PlayerCamera->GetActorForwardVector();
-	FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
-
-	FHitResult outHit;
-	const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
-	const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
-	FCollisionQueryParams params;
-
-	DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
-	bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
-
-	IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
-	
-	if(isDamagable)
+	if (attributes->GetCurrentHealth() > 0)
 	{
-		UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->Damage, NULL, NULL, NULL);
-	}		
+		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
+		float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
+		float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
+
+		AddControllerPitchInput(randomPitch);
+		AddControllerYawInput(randomYaw);
+
+		FVector cameraPos = PlayerCamera->GetActorForwardVector();
+		FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
+
+		FHitResult outHit;
+		const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
+		const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
+		FCollisionQueryParams params;
+
+		DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
+		bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
+
+		IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
+
+		if (isDamagable)
+		{
+			UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->Damage, NULL, NULL, NULL);
+		}
+	}
 }
 
 void ALLCharacter::Tick(float DeltaTime)
