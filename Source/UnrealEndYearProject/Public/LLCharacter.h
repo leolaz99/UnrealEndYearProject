@@ -100,6 +100,9 @@ protected:
 
 	void FireShot();
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void CheckLost(FName Map);
+
 	UPROPERTY(EditAnywhere)
 	float fireRate;
 

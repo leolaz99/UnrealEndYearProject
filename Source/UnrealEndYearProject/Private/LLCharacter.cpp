@@ -215,6 +215,12 @@ void ALLCharacter::FireShot()
 	}
 }
 
+void ALLCharacter::CheckLost(FName Map)
+{
+	if (attributes->GetCurrentHealth() <= 0)
+		UGameplayStatics::OpenLevel(this, Map);
+}
+
 void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
