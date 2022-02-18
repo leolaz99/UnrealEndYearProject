@@ -21,7 +21,7 @@ void ULLAttributes::RemoveHealth(const float value)
 	CurrentHealth -= value;
 	OnHealthChanged.Broadcast(value);
 
-	if (GetCurrentHealth() <= 0)
+	if (FMath::IsNearlyEqual(GetCurrentHealth(), 0, 0.001f))
 	{
 		USkeletalMeshComponent* mesh = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
 		UCapsuleComponent* capsule = GetOwner()->FindComponentByClass<UCapsuleComponent>();

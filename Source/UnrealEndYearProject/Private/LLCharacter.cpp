@@ -217,7 +217,7 @@ void ALLCharacter::FireShot()
 
 void ALLCharacter::CheckLost(FName Map)
 {
-	if (attributes->GetCurrentHealth() <= 0)
+	if (FMath::IsNearlyEqual(attributes->GetCurrentHealth(), 0, 0.001f))
 		UGameplayStatics::OpenLevel(this, Map);
 }
 
