@@ -12,6 +12,8 @@ void ULLPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
+	characterInstance = Cast<ALLCharacter>(pawnOwner);
+
 	if (pawnOwner != nullptr)
 	{
 		isCrouching = characterInstance->crouched;

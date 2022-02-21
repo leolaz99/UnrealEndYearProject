@@ -7,6 +7,5 @@
 UCLASS()
 class UNREALENDYEARPROJECT_API ULLEnemyAnimInstance : public ULLAnimInstance
 {
-	GENERATED_BODY()
-	
+	GENERATED_BODY()	
 };

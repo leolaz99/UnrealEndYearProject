@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "LLAnimInstance.h"
+#include "LLCharacter.h"
 #include "LLPlayerAnimInstance.generated.h"
 
 UCLASS()
@@ -33,4 +34,6 @@ protected:
 	bool isRolling;
 
 	float oldRotation;
+
+	ALLCharacter* characterInstance;
 };

@@ -10,7 +10,6 @@ void ULLAnimInstance::NativeInitializeAnimation()
 	Super::NativeInitializeAnimation();
 
 	pawnOwner = TryGetPawnOwner();
-	characterInstance = Cast<ALLCharacter>(pawnOwner);
 
 	if(pawnOwner != nullptr)
 		charMov = pawnOwner->FindComponentByClass<UCharacterMovementComponent>();

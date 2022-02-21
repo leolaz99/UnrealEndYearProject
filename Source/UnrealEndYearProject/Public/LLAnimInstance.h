@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "LLCharacter.h"
+#include "GameFramework\CharacterMovementComponent.h"
 #include "LLAnimInstance.generated.h"
 
 UCLASS()
@@ -25,6 +25,5 @@ protected:
 	float ActualDirection;
 
 	APawn* pawnOwner;
-	ALLCharacter* characterInstance;
 	UCharacterMovementComponent* charMov;
 };
