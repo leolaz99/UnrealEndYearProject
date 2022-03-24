@@ -20,6 +20,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* attackPlayerMontage;
 
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* damageMontage;
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void TakeDamageMontage();
+
 public:	
 	void AttackPlayer();
 

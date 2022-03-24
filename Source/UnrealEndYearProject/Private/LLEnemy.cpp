@@ -10,6 +10,12 @@ void ALLEnemy::BeginPlay()
 	Super::BeginPlay();
 }
 
+void ALLEnemy::TakeDamageMontage()
+{
+	if(damageMontage)
+		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
+}
+
 void ALLEnemy::AttackPlayer()
 {
 	if(attackPlayerMontage != nullptr)

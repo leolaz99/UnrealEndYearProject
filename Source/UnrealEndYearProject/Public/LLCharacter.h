@@ -103,6 +103,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void CheckLost(FName Map);
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void TakeDamageMontage();
+
+
 	UPROPERTY(EditAnywhere)
 	float fireRate;
 
@@ -121,4 +125,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* fireMontage;
+
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* damageMontage;
 };

@@ -221,6 +221,12 @@ void ALLCharacter::CheckLost(FName Map)
 		UGameplayStatics::OpenLevel(this, Map);
 }
 
+void ALLCharacter::TakeDamageMontage()
+{
+	if(damageMontage)
+		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
+}
+
 void ALLCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
