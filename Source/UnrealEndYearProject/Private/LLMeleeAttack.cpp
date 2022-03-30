@@ -1,6 +1,7 @@
 #include "LLMeleeAttack.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "IDamagable.h"
 #include "DrawDebugHelpers.h"
 
 ULLMeleeAttack::ULLMeleeAttack()
@@ -31,13 +32,19 @@ void ULLMeleeAttack::Attack()
 
 	bool isHit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), SocketLocation1, SocketLocation2, 5.f, UEngineTypes::ConvertToTraceType(ECC_Camera), false, actorsToIgnore, 
 															EDrawDebugTrace::ForDuration, hitResult, true, FLinearColor::Red, FLinearColor::Green, 1.f);
-	
+
 	if (isHit)
 	{
-		if (!isDamaged)
+		IIDamagable* isDamagable = Cast<IIDamagable>(hitResult.Actor);
+
+		if (isDamagable)
 		{
-			UGameplayStatics::ApplyDamage(hitResult.GetActor(), attributes->Damage, NULL, NULL, NULL);
-			isDamaged = true;
+			team = hitResult.GetActor()->FindComponentByClass<ULLTeams>();
+			if (!isDamaged && team->team == 1)
+			{
+				UGameplayStatics::ApplyDamage(hitResult.GetActor(), attributes->Damage, NULL, NULL, NULL);
+				isDamaged = true;
+			}
 		}
 	}
 }

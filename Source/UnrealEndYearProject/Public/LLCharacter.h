@@ -4,10 +4,11 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "LLAttributes.h"
+#include "IDamagable.h"
 #include "LLCharacter.generated.h"
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ALLCharacter : public ACharacter
+class UNREALENDYEARPROJECT_API ALLCharacter : public ACharacter, public IIDamagable
 {
 	GENERATED_BODY()
 

@@ -21,4 +21,6 @@ private:
 	UBehaviorTreeComponent* behaviourTree;
 
 	ALLEnemy* enemy;
+
+	bool isStart = false;
 };
