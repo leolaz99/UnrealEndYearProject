@@ -7,8 +7,6 @@ EBTNodeResult::Type ULLAttackPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
-	isStart = true;
-
 	behaviourTree = &OwnerComp;
 	const AAIController* ownerController = OwnerComp.GetAIOwner();
 	APawn* ownerPawn = ownerController->GetPawn();

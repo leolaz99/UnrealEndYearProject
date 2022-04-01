@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "LLAttributes.h"
-#include "LLTeams.h"
 #include "LLMeleeAttack.generated.h"
 
 
@@ -26,7 +25,6 @@ protected:
 	TArray<AActor*> actorsToIgnore;
 	FHitResult hitResult;
 	ULLAttributes* attributes;
-	ULLTeams* team;
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

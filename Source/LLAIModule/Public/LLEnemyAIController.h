@@ -4,7 +4,6 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "LLCharacter.h"
-#include "LLEnemy.h"
 #include "LLEnemyAIController.generated.h"
 
 UCLASS()
@@ -39,8 +38,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	FName blackboardPlayerInRange;
-
-	ALLEnemy* enemy;
 
 public:
 	virtual void Tick(float DeltaTime) override;
