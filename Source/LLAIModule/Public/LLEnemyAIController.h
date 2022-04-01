@@ -17,26 +17,26 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintCallable, Category = LL)
-	void DetectPlayer();
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = LL)
 	UBehaviorTree* behaviorTree;
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void DetectPlayer(AActor* Player);
 
 	UBlackboardComponent* MyBlackboard;
 
 	bool isSpotted;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = LL)
 	float attackRange;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = LL)
 	FName blackboardPlayer;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = LL)
 	FName blackboardHasSpottedPlayer;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = LL)
 	FName blackboardPlayerInRange;
 
 public:

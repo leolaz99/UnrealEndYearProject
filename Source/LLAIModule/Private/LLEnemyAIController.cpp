@@ -16,26 +16,30 @@ void ALLEnemyAIController::BeginPlay()
 	MyBlackboard = GetBlackboardComponent();
 }
 
-void ALLEnemyAIController::DetectPlayer()
+void ALLEnemyAIController::DetectPlayer(AActor* Player)
 {
-	TSubclassOf<ALLCharacter> classToFind;
-	classToFind = ALLCharacter::StaticClass();
-	TArray<AActor*> foundEnemies;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), classToFind, foundEnemies);
+	ALLCharacter* foundPlayer = Cast<ALLCharacter>(Player);
 
-	MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
-	MyBlackboard->SetValueAsObject(blackboardPlayer, foundEnemies[0]);
+	if(foundPlayer && foundPlayer!= MyBlackboard->GetValueAsObject(blackboardPlayer))
+	{
+		MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
+		MyBlackboard->SetValueAsObject(blackboardPlayer, Player);
+	}
 }
 
 void ALLEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	const APawn* controlledPawn = GetPawn();
-	const float distanceToPlayer = controlledPawn->GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	APawn* controlledPawn = GetPawn();
+	float distanceToPlayer = controlledPawn->GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	
-	if(distanceToPlayer <= attackRange)
-		MyBlackboard->SetValueAsBool(blackboardPlayerInRange, true);
-	else
-		MyBlackboard->SetValueAsBool(blackboardPlayerInRange, false);
+	if (MyBlackboard->GetValueAsBool(blackboardHasSpottedPlayer) == true)
+	{
+		if (distanceToPlayer <= attackRange)
+			MyBlackboard->SetValueAsBool(blackboardPlayerInRange, true);
+
+		else
+			MyBlackboard->SetValueAsBool(blackboardPlayerInRange, false);
+	}
 }
