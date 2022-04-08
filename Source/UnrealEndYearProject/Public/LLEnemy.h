@@ -27,6 +27,8 @@ protected:
 	void TakeDamageMontage();
 
 public:	
+
+	UFUNCTION(BlueprintCallable, Category = LL)
 	void AttackPlayer();
 
 	virtual void Tick(float DeltaTime) override;
