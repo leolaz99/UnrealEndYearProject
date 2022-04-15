@@ -20,4 +20,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TMap<int, int> questTargetCounter;
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void IsCompleted(int ID);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void AddCounter(int ID, int ValueToAdd);
 };
