@@ -12,7 +12,7 @@ class UNREALENDYEARPROJECT_API ALLQuestSystem : public AActor
 public:	
 	ALLQuestSystem();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TMap<int, bool> quest;
 
 	UPROPERTY(EditAnywhere)
