@@ -21,4 +21,3 @@ void ALLQuestSystem::AddCounter(int ID, int ValueToAdd)
 	if (questCounterTarget == questValue)
 		IsCompleted(ID);
 }
-
