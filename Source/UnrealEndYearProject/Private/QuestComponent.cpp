@@ -1,16 +1,16 @@
-#include "LLQuestSystem.h"
+#include "QuestComponent.h"
 
-ALLQuestSystem::ALLQuestSystem()
+UQuestComponent::UQuestComponent()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void ALLQuestSystem::IsCompleted(int ID)
-{	
+void UQuestComponent::IsCompleted(int ID)
+{
 	quest.Add(ID, true);
 }
 
-void ALLQuestSystem::AddCounter(int ID, int ValueToAdd)
+void UQuestComponent::AddCounter(int ID, int ValueToAdd)
 {
 	int questValue = questCounter.FindOrAdd(ID);
 	questValue = questValue + ValueToAdd;
@@ -21,3 +21,4 @@ void ALLQuestSystem::AddCounter(int ID, int ValueToAdd)
 	if (questCounterTarget == questValue)
 		IsCompleted(ID);
 }
+

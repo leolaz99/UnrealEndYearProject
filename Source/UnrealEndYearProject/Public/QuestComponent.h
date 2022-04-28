@@ -1,16 +1,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "LLQuestSystem.generated.h"
+#include "Components/ActorComponent.h"
+#include "QuestComponent.generated.h"
 
-UCLASS()
-class UNREALENDYEARPROJECT_API ALLQuestSystem : public AActor
+
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class UNREALENDYEARPROJECT_API UQuestComponent : public UActorComponent
 {
 	GENERATED_BODY()
-	
+
 public:	
-	ALLQuestSystem();
+	UQuestComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TMap<int, bool> quest;
