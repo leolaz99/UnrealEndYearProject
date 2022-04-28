@@ -7,18 +7,15 @@ UQuestComponent::UQuestComponent()
 
 void UQuestComponent::IsCompleted(int ID)
 {
-	quest.Add(ID, true);
+	FQuestParam questpar = quest.FindOrAdd(ID);
+	questpar.isCompleted = true;
 }
 
 void UQuestComponent::AddCounter(int ID, int ValueToAdd)
 {
-	int questValue = questCounter.FindOrAdd(ID);
-	questValue = questValue + ValueToAdd;
-	questCounter.Add(ID, questValue);
-
-	int questCounterTarget = questTargetCounter.FindOrAdd(ID);
-
-	if (questCounterTarget == questValue)
-		IsCompleted(ID);
+	FQuestParam questpar = quest.FindOrAdd(ID);
+	questpar.questCounter = questpar.questCounter + ValueToAdd;
+	
+	if (questpar.questCounter >= questpar.questTarget)
+		questpar.isCompleted = true;
 }
-
