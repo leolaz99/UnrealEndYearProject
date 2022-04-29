@@ -28,7 +28,7 @@ public:
 	UQuestComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LL)
-	TMap<int, FQuestParam> quest;
+	TMap<int32, FQuestParam> quest;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void IsCompleted(int ID);
