@@ -12,16 +12,16 @@ class LLAIMODULE_API ALLEnemyAIController : public AAIController
 	GENERATED_BODY()
 
 public:
-	ALLEnemyAIController();
+	ALLEnemyAIController(); 
+	
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void DetectPlayer(AActor* Player);
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = LL)
 	UBehaviorTree* behaviorTree;
-
-	UFUNCTION(BlueprintCallable, Category = LL)
-	void DetectPlayer(AActor* Player);
 
 	UBlackboardComponent* MyBlackboard;
 
