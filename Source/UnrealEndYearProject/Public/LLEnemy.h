@@ -26,8 +26,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void TakeDamageMontage();
 
-public:	
+	UPROPERTY(blueprintReadOnly, EditAnywhere, Category = LLQuest)
+	int id;
 
+public:	
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AttackPlayer();
 
