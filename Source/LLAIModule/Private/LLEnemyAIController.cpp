@@ -21,22 +21,24 @@ void ALLEnemyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	if (InPawn) {
+	if (InPawn)
+	{
 		ULLAttributes * attComponent = InPawn->FindComponentByClass<ULLAttributes>();
-		if (attComponent) {
+		
+		if (attComponent) 
 			attComponent->OnOwnerDeath.AddDynamic(this, &ALLEnemyAIController::OnPossessedCharacterDeath);
-		}
 	}
 }
 
 void ALLEnemyAIController::OnUnPossess()
 {
 	const APawn* InPawn = GetPawn();
-	if (InPawn) {
+	if (InPawn) 
+	{
 		ULLAttributes* attComponent = InPawn->FindComponentByClass<ULLAttributes>();
-		if (attComponent) {
-			attComponent->OnOwnerDeath.RemoveDynamic(this, &ALLEnemyAIController::OnPossessedCharacterDeath);
-		}
+		
+		if (attComponent)
+			attComponent->OnOwnerDeath.RemoveDynamic(this, &ALLEnemyAIController::OnPossessedCharacterDeath);	
 	}
 
 	Super::OnUnPossess();
@@ -62,22 +64,21 @@ void ALLEnemyAIController::Tick(float DeltaTime)
 	
 	if (MyBlackboard->GetValueAsBool(blackboardHasSpottedPlayer) == true)
 	{
-		if (distanceToPlayer <= attackRange) {
+		if (distanceToPlayer <= attackRange)
 			MyBlackboard->SetValueAsBool(blackboardPlayerInRange, true);
-
-		}
-		else {
+		
+		else
 			MyBlackboard->SetValueAsBool(blackboardPlayerInRange, false);
-		}
 	}
 }
 
 void ALLEnemyAIController::OnPossessedCharacterDeath(bool bIsAlive)
 {
-	if (!bIsAlive ) {
+	if (!bIsAlive ) 
+	{
 		UBehaviorTreeComponent* BTComp = Cast<UBehaviorTreeComponent>(BrainComponent);
-		if (BTComp) {
+		
+		if (BTComp)
 			BTComp->StopTree(EBTStopMode::Safe);
-		}
 	}
 }

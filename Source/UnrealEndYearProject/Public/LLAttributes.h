@@ -14,16 +14,9 @@ class UNREALENDYEARPROJECT_API ULLAttributes : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-
 	ULLAttributes();
 
-protected:
-	
-	virtual void BeginPlay() override;
-
-public:
-	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void RemoveHealth(const float value);
@@ -32,7 +25,7 @@ public:
 	void SetHealth(const float value);
 
 	UFUNCTION(BlueprintPure, Category = LL)
-	float GetCurrentHealth() const 
+	float GetCurrentHealth() const
 	{
 		return CurrentHealth;
 	}
@@ -50,15 +43,16 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void Kill() {
+	void Kill()
+	{
 		bIsAlive = false;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void Revive() {
+	void Revive()
+	{
 		bIsAlive = true;
 	}
-
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnHealthChanged OnHealthChanged;
@@ -66,7 +60,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnOwnerDeath OnOwnerDeath;
 
-protected: 
+protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly)
 	float Damage;
 

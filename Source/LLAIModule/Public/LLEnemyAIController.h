@@ -13,13 +13,16 @@ class LLAIMODULE_API ALLEnemyAIController : public AAIController
 
 public:
 	ALLEnemyAIController(); 
+	virtual void Tick(float DeltaTime) override;
 	
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void DetectPlayer(AActor* Player);
 
 protected:
 	virtual void BeginPlay() override;
+	
 	virtual void OnPossess(APawn* InPawn) override;
+	
 	virtual void OnUnPossess() override;
 
 	UPROPERTY(EditAnywhere, Category = LL)
@@ -41,11 +44,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = LL)
 	FName blackboardPlayerInRange;
 
-public:
-	virtual void Tick(float DeltaTime) override;
-
 private: 
-
 	UFUNCTION()
 	void OnPossessedCharacterDeath(bool bIsAlive);
 };
