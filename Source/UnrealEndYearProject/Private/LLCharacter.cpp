@@ -210,7 +210,7 @@ void ALLCharacter::FireShot()
 
 		if (isDamagable)
 		{
-			UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->Damage, NULL, NULL, NULL);
+			UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->GetDamage(), NULL, NULL, NULL);
 		}
 	}
 }

@@ -5,6 +5,8 @@
 #include "LLAttributes.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, newVal);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnOwnerDeath, bool, isAlive);
+
 
 UCLASS( ClassGroup=(LL), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API ULLAttributes : public UActorComponent
@@ -26,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void RemoveHealth(const float value);
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void SetHealth(const float value);
+
 	UFUNCTION(BlueprintPure, Category = LL)
 	float GetCurrentHealth() const 
 	{
@@ -38,13 +43,40 @@ public:
 		return Damage;
 	}
 
+	UFUNCTION(BlueprintPure, Category = LL)
+	float GetIsAlive() const
+	{
+		return bIsAlive;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void Kill() {
+		bIsAlive = false;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void Revive() {
+		bIsAlive = true;
+	}
+
+
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnHealthChanged OnHealthChanged;
 
-	UPROPERTY(EditAnywhere)
-	float Damage;
+	UPROPERTY(BlueprintAssignable, Category = LL)
+	FOnOwnerDeath OnOwnerDeath;
 
 protected: 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
+	float Damage;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth;
+
+private: 
+	UPROPERTY()
 	float CurrentHealth;
+
+	UPROPERTY()
+	bool bIsAlive;
 };

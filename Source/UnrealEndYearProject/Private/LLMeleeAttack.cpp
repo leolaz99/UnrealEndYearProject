@@ -39,7 +39,7 @@ void ULLMeleeAttack::Attack()
 
 		if (!isDamaged && !isDamagable)
 		{
-			UGameplayStatics::ApplyDamage(hitResult.GetActor(), attributes->Damage, NULL, NULL, NULL);
+			UGameplayStatics::ApplyDamage(hitResult.GetActor(), attributes->GetDamage(), NULL, NULL, NULL);
 			isDamaged = true;
 		}
 	}

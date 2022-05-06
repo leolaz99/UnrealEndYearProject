@@ -19,6 +19,8 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void OnUnPossess() override;
 
 	UPROPERTY(EditAnywhere, Category = LL)
 	UBehaviorTree* behaviorTree;
@@ -41,4 +43,9 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+private: 
+
+	UFUNCTION()
+	void OnPossessedCharacterDeath(bool bIsAlive);
 };
