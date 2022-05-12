@@ -19,6 +19,8 @@ struct FQuestParam
 	int questTarget;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestComplete, int, QuestIndex);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API UQuestComponent : public UActorComponent
 {
@@ -35,4 +37,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AddCounter(int ID, int ValueToAdd);
+
+	UPROPERTY(BlueprintAssignable, Category = LL)
+	FOnQuestComplete OnQuestComplete;
 };

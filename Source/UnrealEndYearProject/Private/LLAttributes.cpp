@@ -12,7 +12,7 @@ ULLAttributes::ULLAttributes()
 void ULLAttributes::BeginPlay()
 {
 	Super::BeginPlay();
-	SetHealth( MaxHealth);
+	SetHealth(MaxHealth);
 }
 
 void ULLAttributes::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -23,7 +23,7 @@ void ULLAttributes::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 void ULLAttributes::RemoveHealth(const float value)
 {
 	CurrentHealth -= value;
-	OnHealthChanged.Broadcast(value);
+	OnHealthChanged.Broadcast(CurrentHealth);
 
 	if (FMath::IsNearlyEqual(GetCurrentHealth(), 0, 0.001f) && bIsAlive)
 	{
