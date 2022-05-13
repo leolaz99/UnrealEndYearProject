@@ -10,13 +10,16 @@ struct FQuestParam
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
+	FText questText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
 	bool isCompleted;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
-	int questCounter;
+	int32 questCounter;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
-	int questTarget;
+	int32 questTarget;
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestComplete, int, QuestIndex);
