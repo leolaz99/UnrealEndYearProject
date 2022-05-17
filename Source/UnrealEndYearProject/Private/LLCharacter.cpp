@@ -7,6 +7,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "DrawDebugHelpers.h"
 #include "IDamagable.h"
+#include "IInteractable.h"
 #include "LLEnemy.h"
 #include "LLAttributes.h"
 
@@ -225,6 +226,26 @@ void ALLCharacter::TakeDamageMontage()
 {
 	if(damageMontage)
 		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
+}
+
+void ALLCharacter::SetInteract(AActor* Player)
+{
+	IIInteractable* isInteractable = Cast<IIInteractable>(Player);
+
+	if (isInteractable)
+	{
+		inRange = true;
+	}
+}
+
+void ALLCharacter::ResetInteract(AActor* Player)
+{
+	IIInteractable* isInteractable = Cast<IIInteractable>(Player);
+
+	if (isInteractable)
+	{
+		inRange = false;
+	}
 }
 
 void ALLCharacter::Tick(float DeltaTime)

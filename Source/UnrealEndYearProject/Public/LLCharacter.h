@@ -106,6 +106,15 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void TakeDamageMontage();
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void SetInteract(AActor* Player);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void ResetInteract(AActor* Player);
+
+
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	bool inRange;
 
 	UPROPERTY(EditAnywhere)
 	float fireRate;
