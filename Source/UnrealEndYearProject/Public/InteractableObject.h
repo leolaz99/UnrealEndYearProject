@@ -9,4 +9,8 @@ UCLASS()
 class UNREALENDYEARPROJECT_API AInteractableObject : public ATriggerBox, public IIInteractable
 {
 	GENERATED_BODY()
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void InteractWithPlayer(bool value, AActor* player);
 };

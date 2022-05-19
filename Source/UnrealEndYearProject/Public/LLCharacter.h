@@ -26,6 +26,8 @@ public:
 
 	bool roll;
 
+	void PlayerInRange(bool NewValue);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -105,13 +107,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void TakeDamageMontage();
-
-	UFUNCTION(BlueprintCallable, Category = LL)
-	void SetInteract(AActor* Player);
-
-	UFUNCTION(BlueprintCallable, Category = LL)
-	void ResetInteract(AActor* Player);
-
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool inRange;

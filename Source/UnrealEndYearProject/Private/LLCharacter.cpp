@@ -228,24 +228,9 @@ void ALLCharacter::TakeDamageMontage()
 		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
 }
 
-void ALLCharacter::SetInteract(AActor* Player)
+void ALLCharacter::PlayerInRange(bool NewValue)
 {
-	IIInteractable* isInteractable = Cast<IIInteractable>(Player);
-
-	if (isInteractable)
-	{
-		inRange = true;
-	}
-}
-
-void ALLCharacter::ResetInteract(AActor* Player)
-{
-	IIInteractable* isInteractable = Cast<IIInteractable>(Player);
-
-	if (isInteractable)
-	{
-		inRange = false;
-	}
+	inRange = NewValue;
 }
 
 void ALLCharacter::Tick(float DeltaTime)
