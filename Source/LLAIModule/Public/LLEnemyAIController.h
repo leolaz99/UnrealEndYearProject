@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTree.h"
-#include "LLCharacter.h"
+#include "LLPlayer.h"
 #include "LLEnemyAIController.generated.h"
 
 UCLASS()

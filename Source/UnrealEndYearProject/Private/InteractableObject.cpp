@@ -1,9 +1,9 @@
-#include "LLCharacter.h"
+#include "LLPlayer.h"
 #include "InteractableObject.h"
 
 void AInteractableObject::InteractWithPlayer(bool value, AActor* player)
 {
-	ALLCharacter* actualPlayer = Cast<ALLCharacter>(player);
+	ALLPlayer* actualPlayer = Cast<ALLPlayer>(player);
 
 	if (actualPlayer)
 		actualPlayer->PlayerInRange(value);

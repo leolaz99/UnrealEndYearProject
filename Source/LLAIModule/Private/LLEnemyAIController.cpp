@@ -1,6 +1,6 @@
 #include "LLEnemyAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
-#include "LLCharacter.h"
+#include "LLPlayer.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LLAttributes.h"
@@ -46,7 +46,7 @@ void ALLEnemyAIController::OnUnPossess()
 
 void ALLEnemyAIController::DetectPlayer(AActor* Player)
 {
-	ALLCharacter* foundPlayer = Cast<ALLCharacter>(Player);
+	ALLPlayer* foundPlayer = Cast<ALLPlayer>(Player);
 
 	if(foundPlayer && foundPlayer!= MyBlackboard->GetValueAsObject(blackboardPlayer))
 	{

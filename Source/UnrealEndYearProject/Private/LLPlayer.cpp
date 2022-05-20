@@ -1,4 +1,4 @@
-#include "LLCharacter.h"
+#include "LLPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -11,14 +11,14 @@
 #include "LLEnemy.h"
 #include "LLAttributes.h"
 
-ALLCharacter::ALLCharacter()
+ALLPlayer::ALLPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	normalSensitivity = 1.f;
 	roll = false;
 }
 
-void ALLCharacter::BeginPlay()
+void ALLPlayer::BeginPlay()
 {
 	Super::BeginPlay();	
 	
@@ -36,7 +36,7 @@ void ALLCharacter::BeginPlay()
 	attributes = FindComponentByClass<ULLAttributes>();
 }
 
-void ALLCharacter::MoveForward(float verticalAxis)
+void ALLPlayer::MoveForward(float verticalAxis)
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -51,19 +51,19 @@ void ALLCharacter::MoveForward(float verticalAxis)
 	}
 }
 
-void ALLCharacter::MoveCameraVertical(float axisValue)
+void ALLPlayer::MoveCameraVertical(float axisValue)
 {
 	float verticalSpeed = axisValue * sensitivity;
 	AddControllerPitchInput(verticalSpeed);
 }
 
-void ALLCharacter::MoveCameraHorizontal(float axisValue)
+void ALLPlayer::MoveCameraHorizontal(float axisValue)
 {
 	float horizontalSpeed = axisValue * sensitivity;
 	AddControllerYawInput(horizontalSpeed);
 }
 
-void ALLCharacter::MoveHorizontal(float horizontalAxis)
+void ALLPlayer::MoveHorizontal(float horizontalAxis)
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -78,13 +78,13 @@ void ALLCharacter::MoveHorizontal(float horizontalAxis)
 	}
 }
 
-void ALLCharacter::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
+void ALLPlayer::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
 {
 	if (verticalAxisValue == 0 && horizontalAxisValue == 0 && sprinting == true)
 		StopSprint();
 }
 
-void ALLCharacter::StartCrouch()
+void ALLPlayer::StartCrouch()
 {
 	if (!GetCharacterMovement()->IsFalling()) 
 	{
@@ -93,13 +93,13 @@ void ALLCharacter::StartCrouch()
 	}	
 }
 
-void ALLCharacter::StopCrouch()
+void ALLPlayer::StopCrouch()
 {
 	crouched = false;
 	GetCharacterMovement()->bWantsToCrouch = false;
 }
 
-void ALLCharacter::Crouching()
+void ALLPlayer::Crouching()
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -110,7 +110,7 @@ void ALLCharacter::Crouching()
 	}
 }
 
-void ALLCharacter::StartSprint()
+void ALLPlayer::StartSprint()
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -125,7 +125,7 @@ void ALLCharacter::StartSprint()
 	}
 }
 
-void ALLCharacter::StopSprint()
+void ALLPlayer::StopSprint()
 {
 	sprinting = false;
 
@@ -133,7 +133,7 @@ void ALLCharacter::StopSprint()
 		GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
 }
 
-void ALLCharacter::Rolling()
+void ALLPlayer::Rolling()
 {
 	FVector rollDirection = GetLastMovementInputVector();
 	
@@ -148,7 +148,7 @@ void ALLCharacter::Rolling()
 	}
 }
 
-void ALLCharacter::StartAim()
+void ALLPlayer::StartAim()
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -159,7 +159,7 @@ void ALLCharacter::StartAim()
 	}
 }
 
-void ALLCharacter::StopAim()
+void ALLPlayer::StopAim()
 {
 	if(!sprinting)
 		GetCharacterMovement()->MaxWalkSpeed = normalSpeed;
@@ -171,21 +171,21 @@ void ALLCharacter::StopAim()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
-void ALLCharacter::StartFire()
+void ALLPlayer::StartFire()
 {
 	if (aiming)
 	{
 		FireShot();
-		GetWorldTimerManager().SetTimer(handle, this, &ALLCharacter::FireShot, fireRate, true);
+		GetWorldTimerManager().SetTimer(handle, this, &ALLPlayer::FireShot, fireRate, true);
 	}
 }
 
-void ALLCharacter::StopFire()
+void ALLPlayer::StopFire()
 {
 	GetWorldTimerManager().ClearTimer(handle);
 }
 
-void ALLCharacter::FireShot()
+void ALLPlayer::FireShot()
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
@@ -216,24 +216,30 @@ void ALLCharacter::FireShot()
 	}
 }
 
-void ALLCharacter::CheckLost(FName Map)
+void ALLPlayer::CheckLost(FName Map)
 {
 	if (FMath::IsNearlyEqual(attributes->GetCurrentHealth(), 0, 0.001f))
 		UGameplayStatics::OpenLevel(this, Map);
 }
 
-void ALLCharacter::TakeDamageMontage()
+void ALLPlayer::TakeDamageMontage()
 {
 	if(damageMontage)
 		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
 }
 
-void ALLCharacter::PlayerInRange(bool NewValue)
+void ALLPlayer::Interaction()
+{
+	if (inRange)
+		OnInteract.Broadcast();
+}
+
+void ALLPlayer::PlayerInRange(bool NewValue)
 {
 	inRange = NewValue;
 }
 
-void ALLCharacter::Tick(float DeltaTime)
+void ALLPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
@@ -254,7 +260,7 @@ void ALLCharacter::Tick(float DeltaTime)
 	}
 }
 
-void ALLCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ALLPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }

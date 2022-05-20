@@ -4,15 +4,17 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "LLAttributes.h"
-#include "LLCharacter.generated.h"
+#include "LLPlayer.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteract);
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ALLCharacter : public ACharacter
+class UNREALENDYEARPROJECT_API ALLPlayer : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	ALLCharacter();
+	ALLPlayer();
 	
 	virtual void Tick(float DeltaTime) override;
 
@@ -27,6 +29,9 @@ public:
 	bool roll;
 
 	void PlayerInRange(bool NewValue);
+
+	UPROPERTY(BlueprintAssignable, Category = LL)
+	FOnInteract OnInteract;
 
 protected:
 	virtual void BeginPlay() override;
@@ -107,6 +112,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void TakeDamageMontage();
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void Interaction();
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool inRange;

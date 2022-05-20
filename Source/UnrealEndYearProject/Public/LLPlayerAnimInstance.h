@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "LLAnimInstance.h"
-#include "LLCharacter.h"
+#include "LLPlayer.h"
 #include "LLPlayerAnimInstance.generated.h"
 
 UCLASS()
@@ -35,5 +35,5 @@ protected:
 
 	float oldRotation;
 
-	ALLCharacter* characterInstance;
+	ALLPlayer* characterInstance;
 };

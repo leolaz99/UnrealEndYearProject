@@ -12,7 +12,7 @@ void ULLPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	characterInstance = Cast<ALLCharacter>(pawnOwner);
+	characterInstance = Cast<ALLPlayer>(pawnOwner);
 
 	if (pawnOwner != nullptr)
 	{
