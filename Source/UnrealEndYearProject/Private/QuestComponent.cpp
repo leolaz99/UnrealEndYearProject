@@ -1,5 +1,5 @@
-#include "Kismet/GameplayStatics.h"
 #include "QuestComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 UQuestComponent::UQuestComponent()
 {
