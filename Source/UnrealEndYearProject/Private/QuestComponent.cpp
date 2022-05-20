@@ -1,8 +1,10 @@
+#include "Kismet/GameplayStatics.h"
 #include "QuestComponent.h"
 
 UQuestComponent::UQuestComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+	completedQuest = 0;
 }
 
 void UQuestComponent::IsCompleted(int ID)
@@ -12,6 +14,11 @@ void UQuestComponent::IsCompleted(int ID)
 		questpar->isCompleted = true;
 
 	OnQuestComplete.Broadcast(ID);
+
+	completedQuest++;
+
+	if(completedQuest == quest.Num())
+		UGameplayStatics::OpenLevel(this, map);
 }
 
 void UQuestComponent::AddCounter(int ID, int ValueToAdd)

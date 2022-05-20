@@ -35,6 +35,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LL)
 	TMap<int32, FQuestParam> quest;
 
+	UPROPERTY(EditAnywhere, Category = LL)
+	FName map;
+
+	UPROPERTY(BlueprintReadOnly, Category = LL)
+	int completedQuest;
+
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void IsCompleted(int ID);
 	
