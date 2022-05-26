@@ -10,6 +10,7 @@ public class UnrealEndYearProjectTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "UnrealEndYearProject", "LLAIModule" } );
+		ExtraModuleNames.Add("UnrealEndYearProject"); 
+		ExtraModuleNames.Add("LLAIModule");
 	}
 }

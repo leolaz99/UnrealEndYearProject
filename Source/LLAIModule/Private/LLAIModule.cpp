@@ -3,4 +3,4 @@
 #include "LLAIModule.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, LLAIModule, "LLAIModule" );
+IMPLEMENT_GAME_MODULE( FDefaultGameModuleImpl, LLAIModule);
