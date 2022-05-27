@@ -16,8 +16,6 @@ class UNREALENDYEARPROJECT_API ULLAttributes : public UActorComponent
 public:	
 	ULLAttributes();
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void RemoveHealth(const float value);
 

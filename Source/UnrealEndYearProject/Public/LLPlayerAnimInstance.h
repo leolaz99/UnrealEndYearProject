@@ -19,7 +19,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void CheckRoll();
 
-	void AimingAimOffset(float deltaTime);
+	void AimingAimOffset(const float deltaTime);
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	bool isCrouching;

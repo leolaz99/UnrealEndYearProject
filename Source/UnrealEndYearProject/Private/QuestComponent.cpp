@@ -7,7 +7,7 @@ UQuestComponent::UQuestComponent()
 	completedQuest = 0;
 }
 
-void UQuestComponent::IsCompleted(int ID)
+void UQuestComponent::IsCompleted(const int ID)
 {
 	FQuestParam* questpar = quest.Find(ID);
 	if (questpar)
@@ -21,7 +21,7 @@ void UQuestComponent::IsCompleted(int ID)
 		UGameplayStatics::OpenLevel(this, map);
 }
 
-void UQuestComponent::AddCounter(int ID, int ValueToAdd)
+void UQuestComponent::AddCounter(const int ID, const int ValueToAdd)
 {
 	FQuestParam* questpar = quest.Find(ID);
 

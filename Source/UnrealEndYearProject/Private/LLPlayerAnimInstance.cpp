@@ -29,7 +29,7 @@ void ULLPlayerAnimInstance::CheckRoll()
 	characterInstance->roll = false;
 }
 
-void ULLPlayerAnimInstance::AimingAimOffset(float deltaTime)
+void ULLPlayerAnimInstance::AimingAimOffset(const float deltaTime)
 {
 	FRotator controlRotation = characterInstance->GetControlRotation();
 	controlRotation.Normalize();

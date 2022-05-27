@@ -1,7 +1,7 @@
 #include "InteractableObject.h"
 #include "LLPlayer.h"
 
-void AInteractableObject::InteractWithPlayer(bool value, AActor* player)
+void AInteractableObject::InteractWithPlayer(const bool value, AActor* player)
 {
 	ALLPlayer* actualPlayer = Cast<ALLPlayer>(player);
 

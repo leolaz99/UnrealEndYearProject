@@ -6,7 +6,7 @@
 
 ULLMeleeAttack::ULLMeleeAttack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void ULLMeleeAttack::BeginPlay()
@@ -17,11 +17,6 @@ void ULLMeleeAttack::BeginPlay()
 	attributes = GetOwner()->FindComponentByClass<ULLAttributes>();
 }
 
-void ULLMeleeAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
 void ULLMeleeAttack::Attack()
 {
 	skeletalMesh = GetOwner()->FindComponentByClass<USkeletalMeshComponent>();
@@ -30,7 +25,7 @@ void ULLMeleeAttack::Attack()
 
 	FCollisionQueryParams params;
 
-	bool isHit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), SocketLocation1, SocketLocation2, 5.f, UEngineTypes::ConvertToTraceType(ECC_Camera), false, actorsToIgnore, 
+	const bool isHit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), SocketLocation1, SocketLocation2, 5.f, UEngineTypes::ConvertToTraceType(ECC_Camera), false, actorsToIgnore, 
 															EDrawDebugTrace::ForDuration, hitResult, true, FLinearColor::Red, FLinearColor::Green, 1.f);
 	
 	if (isHit)

@@ -36,49 +36,49 @@ void ALLPlayer::BeginPlay()
 	attributes = FindComponentByClass<ULLAttributes>();
 }
 
-void ALLPlayer::MoveForward(float verticalAxis)
+void ALLPlayer::MoveForward(const float verticalAxis)
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
 		actualVerticalAxis = verticalAxis;
 
-		FRotator rotation = GetControlRotation();
-		FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
+		const FRotator rotation = GetControlRotation();
+		const FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
-		FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
+		const FVector directionVector = UKismetMathLibrary::GetForwardVector(direction);
 		UCharacterMovementComponent* movComp = GetCharacterMovement();
 		movComp->AddInputVector(directionVector * verticalAxis, false);
 	}
 }
 
-void ALLPlayer::MoveCameraVertical(float axisValue)
+void ALLPlayer::MoveCameraVertical(const float axisValue)
 {
-	float verticalSpeed = axisValue * sensitivity;
+	const float verticalSpeed = axisValue * sensitivity;
 	AddControllerPitchInput(verticalSpeed);
 }
 
-void ALLPlayer::MoveCameraHorizontal(float axisValue)
+void ALLPlayer::MoveCameraHorizontal(const float axisValue)
 {
-	float horizontalSpeed = axisValue * sensitivity;
+	const float horizontalSpeed = axisValue * sensitivity;
 	AddControllerYawInput(horizontalSpeed);
 }
 
-void ALLPlayer::MoveHorizontal(float horizontalAxis)
+void ALLPlayer::MoveHorizontal(const float horizontalAxis)
 {
 	if (attributes->GetCurrentHealth() > 0)
 	{
 		actualHorizontalAxis = horizontalAxis;
 
-		FRotator rotation = GetControlRotation();
-		FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
+		const FRotator rotation = GetControlRotation();
+		const FRotator direction = FRotator(0.f, rotation.Yaw, 0.f);
 
-		FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
+		const FVector directionVector = UKismetMathLibrary::GetRightVector(direction);
 		UCharacterMovementComponent* movComp = GetCharacterMovement();
 		movComp->AddInputVector(directionVector * horizontalAxis, false);
 	}
 }
 
-void ALLPlayer::CheckSprint(float verticalAxisValue, float horizontalAxisValue)
+void ALLPlayer::CheckSprint(const float verticalAxisValue, const float horizontalAxisValue)
 {
 	if (verticalAxisValue == 0 && horizontalAxisValue == 0 && sprinting == true)
 		StopSprint();
@@ -135,11 +135,11 @@ void ALLPlayer::StopSprint()
 
 void ALLPlayer::Rolling()
 {
-	FVector rollDirection = GetLastMovementInputVector();
+	const FVector rollDirection = GetLastMovementInputVector();
 	
 	if (roll == false && !rollDirection.IsZero())
 	{
-		FRotator MovementRotation = rollDirection.Rotation();
+		const FRotator MovementRotation = rollDirection.Rotation();
 		SetActorRotation(MovementRotation);
 
 		StopSprint();
@@ -196,18 +196,18 @@ void ALLPlayer::FireShot()
 		AddControllerPitchInput(randomPitch);
 		AddControllerYawInput(randomYaw);
 
-		FVector cameraPos = PlayerCamera->GetActorForwardVector();
-		FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
+		const FVector cameraPos = PlayerCamera->GetActorForwardVector();
+		const FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
 		FHitResult outHit;
 		const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
 		const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
-		FCollisionQueryParams params;
+		const FCollisionQueryParams params;
 
 		DrawDebugLine(GetWorld(), start, end, FColor::Red, false, 1, 0, 1);
 		bool isHit = GetWorld()->LineTraceSingleByChannel(outHit, start, end, ECC_Visibility, params);
 
-		IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
+		const IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
 
 		if (isDamagable)
 		{
@@ -234,7 +234,7 @@ void ALLPlayer::Interaction()
 		OnInteract.Broadcast();
 }
 
-void ALLPlayer::PlayerInRange(bool NewValue)
+void ALLPlayer::PlayerInRange(const bool NewValue)
 {
 	inRange = NewValue;
 }
@@ -249,13 +249,13 @@ void ALLPlayer::Tick(float DeltaTime)
 	{
 		sensitivity = aimSensitivity;
 		bUseControllerRotationYaw = true;
-		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), aimFOV, DeltaTime, fovChangeSpeed);
+		const float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), aimFOV, DeltaTime, fovChangeSpeed);
 		PlayerCamera->SetFOV(NewFOV);	
 	}
 
 	if (!aiming || roll)
 	{
-		float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), normalFOV, DeltaTime, fovChangeSpeed);
+		const float NewFOV = FMath::FInterpTo(PlayerCamera->GetFOVAngle(), normalFOV, DeltaTime, fovChangeSpeed);
 		PlayerCamera->SetFOV(NewFOV);		
 	}
 }

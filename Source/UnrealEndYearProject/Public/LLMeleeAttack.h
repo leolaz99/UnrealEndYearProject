@@ -27,8 +27,6 @@ protected:
 	ULLAttributes* attributes;
 
 public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	void Attack();
 
 	bool isDamaged;

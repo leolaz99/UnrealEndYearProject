@@ -42,10 +42,10 @@ public:
 	int completedQuest;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void IsCompleted(int ID);
+	void IsCompleted(const int ID);
 	
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void AddCounter(int ID, int ValueToAdd);
+	void AddCounter(const int ID, const int ValueToAdd);
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnQuestComplete OnQuestComplete;

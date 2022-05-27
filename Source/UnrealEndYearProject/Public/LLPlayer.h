@@ -28,7 +28,7 @@ public:
 
 	bool roll;
 
-	void PlayerInRange(bool NewValue);
+	void PlayerInRange(const bool NewValue);
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnInteract OnInteract;
@@ -37,19 +37,19 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveForward(float verticalAxis);
+	void MoveForward(const float verticalAxis);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveCameraVertical(float axisValue);
+	void MoveCameraVertical(const float axisValue);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveCameraHorizontal(float axisValue);
+	void MoveCameraHorizontal(const float axisValue);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void MoveHorizontal(float horizontalAxis);
+	void MoveHorizontal(const float horizontalAxis);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void CheckSprint(float verticalAxisValue, float horizontalAxisValue);
+	void CheckSprint(const float verticalAxisValue, const float horizontalAxisValue);
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
 	float sensitivity;

@@ -46,7 +46,7 @@ void ALLEnemyAIController::OnUnPossess()
 
 void ALLEnemyAIController::DetectPlayer(AActor* Player)
 {
-	ALLPlayer* foundPlayer = Cast<ALLPlayer>(Player);
+	const ALLPlayer* foundPlayer = Cast<ALLPlayer>(Player);
 
 	if(foundPlayer && foundPlayer!= MyBlackboard->GetValueAsObject(blackboardPlayer))
 	{
@@ -59,8 +59,8 @@ void ALLEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	APawn* controlledPawn = GetPawn();
-	float distanceToPlayer = controlledPawn->GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	const APawn* controlledPawn = GetPawn();
+	const float distanceToPlayer = controlledPawn->GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	
 	if (MyBlackboard->GetValueAsBool(blackboardHasSpottedPlayer) == true)
 	{
