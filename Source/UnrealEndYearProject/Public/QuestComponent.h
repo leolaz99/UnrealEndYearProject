@@ -23,6 +23,7 @@ struct FQuestParam
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestComplete, int, QuestIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnValueChange, int, QuestIndex);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API UQuestComponent : public UActorComponent
@@ -49,4 +50,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnQuestComplete OnQuestComplete;
+
+	UPROPERTY(BlueprintAssignable, Category = LL)
+	FOnValueChange OnValueChange;
 };

@@ -29,6 +29,8 @@ void UQuestComponent::AddCounter(const int ID, const int ValueToAdd)
 	{
 		questpar->questCounter = questpar->questCounter + ValueToAdd;
 
+		OnValueChange.Broadcast(ID);
+
 		if (questpar->questCounter >= questpar->questTarget)
 			IsCompleted(ID);
 	}
