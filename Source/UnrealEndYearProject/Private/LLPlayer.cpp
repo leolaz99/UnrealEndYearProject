@@ -190,8 +190,8 @@ void ALLPlayer::FireShot()
 	if (attributes->GetCurrentHealth() > 0)
 	{
 		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
-		float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
-		float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
+		const float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
+		const float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
 
 		AddControllerPitchInput(randomPitch);
 		AddControllerYawInput(randomYaw);

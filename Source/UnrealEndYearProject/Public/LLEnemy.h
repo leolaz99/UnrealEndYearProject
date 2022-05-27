@@ -33,7 +33,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AttackPlayer();
 
-	virtual void Tick(float DeltaTime) override;
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };

@@ -2,7 +2,7 @@
 
 ALLEnemy::ALLEnemy()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void ALLEnemy::BeginPlay()
@@ -20,11 +20,6 @@ void ALLEnemy::AttackPlayer()
 {
 	if(attackPlayerMontage != nullptr)
 		PlayAnimMontage(attackPlayerMontage, 1.5f, FName("Default"));
-}
-
-void ALLEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 void ALLEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
