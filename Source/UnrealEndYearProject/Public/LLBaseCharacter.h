@@ -2,31 +2,24 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "IDamagable.h"
-#include "LLBaseCharacter.h"
-#include "LLEnemy.generated.h"
+#include "LLBaseCharacter.generated.h"
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ALLEnemy : public ALLBaseCharacter, public IIDamagable
+class UNREALENDYEARPROJECT_API ALLBaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	
-	ALLEnemy();
+	ALLBaseCharacter();
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere)
-	UAnimMontage* attackPlayerMontage;
-
-	UPROPERTY(blueprintReadOnly, EditAnywhere, Category = LLQuest)
-	int id;
-
-public:	
+	UAnimMontage* damageMontage;
+	
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void AttackPlayer();
+	void TakeDamageMontage();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };

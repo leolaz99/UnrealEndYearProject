@@ -222,12 +222,6 @@ void ALLPlayer::CheckLost(FName Map)
 		UGameplayStatics::OpenLevel(this, Map);
 }
 
-void ALLPlayer::TakeDamageMontage()
-{
-	if(damageMontage)
-		PlayAnimMontage(damageMontage, 1.f, FName("Default"));
-}
-
 void ALLPlayer::Interaction()
 {
 	if (inRange)

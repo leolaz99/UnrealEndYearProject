@@ -4,12 +4,13 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "LLAttributes.h"
+#include "LLBaseCharacter.h"
 #include "LLPlayer.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInteract);
 
 UCLASS()
-class UNREALENDYEARPROJECT_API ALLPlayer : public ACharacter
+class UNREALENDYEARPROJECT_API ALLPlayer : public ALLBaseCharacter
 {
 	GENERATED_BODY()
 
@@ -111,9 +112,6 @@ protected:
 	void CheckLost(FName Map);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void TakeDamageMontage();
-
-	UFUNCTION(BlueprintCallable, Category = LL)
 	void Interaction();
 
 	UPROPERTY(BlueprintReadOnly, Category = LL)
@@ -137,7 +135,4 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* fireMontage;
-
-	UPROPERTY(EditAnywhere)
-	UAnimMontage* damageMontage;
 };

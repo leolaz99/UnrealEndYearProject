@@ -3,19 +3,19 @@
 	"EngineAssociation": "4.26",
 	"Category": "",
 	"Description": "",
-	"Modules": 
-	[
+	"Modules": [
 		{
 			"Name": "UnrealEndYearProject",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		},
-
 		{
 			"Name": "LLAIModule",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
-
 	]
 }
