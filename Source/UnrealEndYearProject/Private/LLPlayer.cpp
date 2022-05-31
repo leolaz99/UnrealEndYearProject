@@ -190,6 +190,10 @@ void ALLPlayer::FireShot()
 	if (attributes->GetCurrentHealth() > 0)
 	{
 		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
+		
+		if (ShootSound)
+			UGameplayStatics::PlaySound2D(GetWorld(), ShootSound, 1.f, 1.f, 0.f, NULL);
+		
 		const float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
 		const float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
 
@@ -218,8 +222,7 @@ void ALLPlayer::FireShot()
 
 void ALLPlayer::CheckLost(FName Map)
 {
-	if (FMath::IsNearlyEqual(attributes->GetCurrentHealth(), 0, 0.001f))
-		UGameplayStatics::OpenLevel(this, Map);
+	UGameplayStatics::OpenLevel(this, Map);
 }
 
 void ALLPlayer::Interaction()
