@@ -29,4 +29,10 @@ public:
 	void AttackPlayer();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* spottedSound;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* attackSound;
 };

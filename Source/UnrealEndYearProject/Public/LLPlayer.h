@@ -137,7 +137,6 @@ protected:
 	UAnimMontage* fireMontage;
 
 private:
-
 	UPROPERTY(EditAnywhere)
-	USoundBase* ShootSound;
+	USoundBase* shootSound;
 };

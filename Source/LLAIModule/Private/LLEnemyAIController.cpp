@@ -1,6 +1,7 @@
 #include "LLEnemyAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "LLPlayer.h"
+#include "LLEnemy.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LLAttributes.h"
@@ -50,6 +51,12 @@ void ALLEnemyAIController::DetectPlayer(AActor* Player)
 
 	if(foundPlayer && foundPlayer!= MyBlackboard->GetValueAsObject(blackboardPlayer))
 	{
+		const APawn* controlledPawn = GetPawn();
+		const ALLEnemy* enemy = Cast<ALLEnemy>(controlledPawn);
+
+		if (enemy->spottedSound)
+			UGameplayStatics::PlaySound2D(GetWorld(), enemy->spottedSound, 1.f, 1.f, 0.f, NULL);
+		
 		MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
 		MyBlackboard->SetValueAsObject(blackboardPlayer, Player);
 	}

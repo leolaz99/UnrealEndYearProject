@@ -191,8 +191,8 @@ void ALLPlayer::FireShot()
 	{
 		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
 		
-		if (ShootSound)
-			UGameplayStatics::PlaySound2D(GetWorld(), ShootSound, 1.f, 1.f, 0.f, NULL);
+		if (shootSound)
+			UGameplayStatics::PlaySound2D(GetWorld(), shootSound, 1.f, 1.f, 0.f, NULL);
 		
 		const float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
 		const float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
