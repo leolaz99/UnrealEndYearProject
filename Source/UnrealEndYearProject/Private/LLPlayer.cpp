@@ -188,11 +188,9 @@ void ALLPlayer::StopFire()
 
 void ALLPlayer::FireShot()
 {
-	if (attributes->GetCurrentHealth() > 0)
+	if (attributes->GetCurrentHealth() > 0 && aiming)
 	{
 		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
-		
-		
 		
 		const float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
 		const float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
@@ -203,9 +201,9 @@ void ALLPlayer::FireShot()
 		const FVector cameraPos = PlayerCamera->GetActorForwardVector();
 		const FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
-		if (shootSound) {
+		if (shootSound)
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootSound, muzzlePos.GetLocation(), 1.f, 1.f, 0.f, NULL);
-		}
+
 		FHitResult outHit;
 		const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
 		const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
@@ -217,9 +215,7 @@ void ALLPlayer::FireShot()
 		const IIDamagable* isDamagable = Cast<IIDamagable>(outHit.Actor);
 
 		if (isDamagable)
-		{
-			UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->GetDamage(), NULL, NULL, NULL);
-		}
+			UGameplayStatics::ApplyDamage(outHit.GetActor(), attributes->GetDamage(), NULL, NULL, NULL);	
 	}
 }
 

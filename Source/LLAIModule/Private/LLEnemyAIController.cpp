@@ -54,9 +54,8 @@ void ALLEnemyAIController::DetectPlayer(AActor* Player)
 		const APawn* controlledPawn = GetPawn();
 		const ALLEnemy* enemy = Cast<ALLEnemy>(controlledPawn);
 
-		if (enemy->spottedSound) {
+		if (enemy->spottedSound) 
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), enemy->spottedSound, GetPawn()->GetActorLocation(), 1.f, 1.f, 0.f, NULL);
-		}
 		
 		MyBlackboard->SetValueAsBool(blackboardHasSpottedPlayer, true);
 		MyBlackboard->SetValueAsObject(blackboardPlayer, Player);
