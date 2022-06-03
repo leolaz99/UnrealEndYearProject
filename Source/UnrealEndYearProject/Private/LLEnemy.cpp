@@ -16,8 +16,9 @@ void ALLEnemy::AttackPlayer()
 	if(attackPlayerMontage != nullptr)
 		PlayAnimMontage(attackPlayerMontage, 1.5f, FName("Default"));
 
-	if (attackSound)
-		UGameplayStatics::PlaySound2D(GetWorld(), attackSound, 1.f, 1.f, 0.f, NULL);
+	if (attackSound) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), attackSound, GetActorLocation(), 1.f, 1.f, 0.f, NULL);
+	}
 }
 
 void ALLEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

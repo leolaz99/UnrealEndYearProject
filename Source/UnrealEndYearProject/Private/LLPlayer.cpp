@@ -137,10 +137,11 @@ void ALLPlayer::Rolling()
 {
 	const FVector rollDirection = GetLastMovementInputVector();
 	
-	if (roll == false && !rollDirection.IsZero())
+	if (roll == false && !rollDirection.IsZero() && rollMontage)
 	{
 		const FRotator MovementRotation = rollDirection.Rotation();
 		SetActorRotation(MovementRotation);
+		PlayAnimMontage(rollMontage, 1.f, FName("Default"));
 
 		StopSprint();
 		StopAim();
@@ -191,8 +192,7 @@ void ALLPlayer::FireShot()
 	{
 		PlayAnimMontage(fireMontage, 1.f, FName("Default"));
 		
-		if (shootSound)
-			UGameplayStatics::PlaySound2D(GetWorld(), shootSound, 1.f, 1.f, 0.f, NULL);
+		
 		
 		const float randomPitch = -0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (-0.05f + 0.1f)));
 		const float randomYaw = -0.2f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.2f + 0.2f)));
@@ -203,6 +203,9 @@ void ALLPlayer::FireShot()
 		const FVector cameraPos = PlayerCamera->GetActorForwardVector();
 		const FTransform muzzlePos = rifleRef->GetSocketTransform("Muzzle");
 
+		if (shootSound) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), shootSound, muzzlePos.GetLocation(), 1.f, 1.f, 0.f, NULL);
+		}
 		FHitResult outHit;
 		const FVector start = PlayerCamera->GetTransform().GetLocation() + (PlayerCamera->GetActorForwardVector() * SpringArm->TargetArmLength);
 		const FVector end = (PlayerCamera->GetActorForwardVector() * range) + start;
