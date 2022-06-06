@@ -120,7 +120,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void Interaction();
 
-	UPROPERTY(BlueprintReadOnly, Category = LL)
+	UPROPERTY(BlueprintReadWrite, Category = LL)
 	bool inRange;
 
 	UPROPERTY(EditAnywhere)

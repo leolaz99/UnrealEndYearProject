@@ -12,5 +12,5 @@ class UNREALENDYEARPROJECT_API AInteractableObject : public ATriggerBox, public 
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void InteractWithPlayer(const bool value, AActor* player);
+	bool InteractWithPlayer(const bool value, AActor* player);
 };
