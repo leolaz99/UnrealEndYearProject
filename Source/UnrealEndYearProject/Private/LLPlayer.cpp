@@ -151,7 +151,7 @@ void ALLPlayer::Rolling()
 
 void ALLPlayer::StartAim()
 {
-	if (attributes->GetCurrentHealth() > 0)
+	if (attributes->GetCurrentHealth() > 0 && !roll)
 	{
 		aiming = true;
 		StopSprint();
