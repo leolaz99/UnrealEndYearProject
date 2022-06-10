@@ -35,11 +35,6 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnInteract OnInteract;
 
-	UFUNCTION(BlueprintPure, Category = LL)
-	FGameplayTag GetCurrentState() const { return CurrentState; }
-
-	UFUNCTION(BlueprintCallable, Category = LL)
-	void SetCurrentState(FGameplayTag val) { CurrentState = val; }
 protected:
 	virtual void BeginPlay() override;
 
@@ -145,8 +140,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* rollMontage;
 
-	UPROPERTY(EditAnywhere)
-	FGameplayTag CurrentState; 
 private:
 	UPROPERTY(EditAnywhere)
 	USoundBase* shootSound;
