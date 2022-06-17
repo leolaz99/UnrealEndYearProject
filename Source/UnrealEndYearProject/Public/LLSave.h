@@ -10,6 +10,9 @@ class UNREALENDYEARPROJECT_API ULLSave : public USaveGame
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadOnly, Category = Save)
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
 	float HP;
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
+	FTransform playerTransform;
 };

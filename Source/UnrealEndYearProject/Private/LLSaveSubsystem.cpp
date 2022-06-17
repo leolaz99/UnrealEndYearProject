@@ -22,7 +22,8 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 		{
 			if (attributesComp)
 				LLsaveGame->HP = attributesComp->GetCurrentHealth();
-			//LLsaveGame->PlayerTransform = pawn->GetActorTransform();
+			
+			LLsaveGame->playerTransform = pawn->GetActorTransform();
 		}
 
 		if (UGameplayStatics::SaveGameToSlot(SaveGameObject, saveName, index))
@@ -55,7 +56,8 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 			if (attributesComp)
 				attributesComp->SetHealth(LLsaveGame->HP);
 			
-			//pawn->SetActorTransform(saveGameDT->PlayerTransform);
+			pawn->SetActorTransform(LLsaveGame->playerTransform);
+			
 			if (GEngine)
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("LOAD SUCCEDED!"));
 		}
