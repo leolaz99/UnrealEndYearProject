@@ -1,6 +1,7 @@
 #include "LLSaveSubsystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "LLAttributes.h"
+#include "QuestComponent.h"
 #include "LLSave.h"
 #include "GameFramework/Pawn.h"
 #include "LLSaveDeveloperSettings.h"
@@ -13,9 +14,13 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(savegameType);
 
 	const APawn* pawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+
 	if (pawn && SaveGameObject)
 	{
 		const ULLAttributes* attributesComp = pawn->FindComponentByClass<ULLAttributes>();
+		//const UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
+
 		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
 
 		if (LLsaveGame)
@@ -23,31 +28,34 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 			if (attributesComp)
 				LLsaveGame->HP = attributesComp->GetCurrentHealth();
 			
-			LLsaveGame->playerTransform = pawn->GetActorTransform();
+			LLsaveGame->playerTransform = pawn->GetActorTransform();						
 		}
 
-		if (UGameplayStatics::SaveGameToSlot(SaveGameObject, saveName, index))
+		if (UGameplayStatics::SaveGameToSlot(LLsaveGame, saveName, index))
 		{
 			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SAVE SUCCEDED!"));
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("SAVE SUCCEDED!"));
 
 			return true;
 		}
 	}
 
 	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SAVE FAILED!"));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("SAVE FAILED!"));
 	
 	return false;
 }
 
 void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 {
+	//const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
 	USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(saveName, index);
 	APawn* pawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	
 	if (pawn && SaveGameObject) 
 	{
+		//UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
+
 		ULLAttributes* attributesComp = pawn->FindComponentByClass<ULLAttributes>();
 		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
 		
@@ -59,11 +67,11 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 			pawn->SetActorTransform(LLsaveGame->playerTransform);
 			
 			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("LOAD SUCCEDED!"));
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("LOAD SUCCEDED!"));
 		}
 	}
 	
 	else
 		if (GEngine) 
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("LOAD FAILED!"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("LOAD FAILED!"));
 }

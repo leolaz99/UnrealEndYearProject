@@ -48,6 +48,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AddCounter(const int ID, const int ValueToAdd);
 
+	UFUNCTION(BlueprintCallable, Category = LL)
+	void SetCounter(const int ID, const int newValue);
+
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnQuestComplete OnQuestComplete;
 

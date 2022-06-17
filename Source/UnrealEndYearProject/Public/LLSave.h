@@ -15,4 +15,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
 	FTransform playerTransform;
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
+	TMap<int32, int32> saveQuest;
 };

@@ -35,3 +35,18 @@ void UQuestComponent::AddCounter(const int ID, const int ValueToAdd)
 			IsCompleted(ID);
 	}
 }
+
+void UQuestComponent::SetCounter(const int ID, const int newValue)
+{
+	FQuestParam* questpar = quest.Find(ID);
+
+	if (questpar)
+	{
+		questpar->questCounter = newValue;
+
+		OnValueChange.Broadcast(ID);
+
+		if (questpar->questCounter >= questpar->questTarget)
+			IsCompleted(ID);
+	}
+}

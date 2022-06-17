@@ -1,7 +1,7 @@
 #include "LLMeleeAttack.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "IDamagable.h"
+#include "LLPlayer.h"
 #include "DrawDebugHelpers.h"
 
 ULLMeleeAttack::ULLMeleeAttack()
@@ -30,9 +30,9 @@ void ULLMeleeAttack::Attack()
 	
 	if (isHit)
 	{
-		IIDamagable* isDamagable = Cast<IIDamagable>(hitResult.Actor);
+		ALLPlayer* isPlayer = Cast<ALLPlayer>(hitResult.Actor);
 
-		if (!isDamaged && !isDamagable)
+		if (!isDamaged && isPlayer)
 		{
 			UGameplayStatics::ApplyDamage(hitResult.GetActor(), attributes->GetDamage(), NULL, NULL, NULL);
 			isDamaged = true;
