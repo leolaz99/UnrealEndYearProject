@@ -10,6 +10,9 @@ struct FQuestParam
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
+	int32 questIndex;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
 	FText questText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = LL)
@@ -22,19 +25,20 @@ struct FQuestParam
 	int32 questTarget;
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestComplete, int, QuestIndex);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnValueChange, int, QuestIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnQuestComplete, int32, QuestIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnValueChange, int32, QuestIndex, int32, QuestCounter);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALENDYEARPROJECT_API UQuestComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LL)
+	TArray<FQuestParam> quest;
+
 public:	
 	UQuestComponent();
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = LL)
-	TMap<int32, FQuestParam> quest;
 
 	UPROPERTY(EditAnywhere, Category = LL)
 	FName map;
@@ -46,10 +50,16 @@ public:
 	void IsCompleted(const int ID);
 	
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void AddCounter(const int ID, const int ValueToAdd);
+	void AddCounter(const int QuestIndex, const int ValueToAdd);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	void SetCounter(const int ID, const int newValue);
+	void SetCounter(const int QuestIndex, const int newValue);
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	int32 GetCounter(const int QuestIndex)
+	{
+		return quest[QuestIndex].questCounter;
+	}
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnQuestComplete OnQuestComplete;

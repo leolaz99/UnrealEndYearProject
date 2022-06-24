@@ -14,12 +14,12 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(savegameType);
 
 	const APawn* pawn = UGameplayStatics::GetPlayerPawn(this, 0);
-	//const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+	const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
 
 	if (pawn && SaveGameObject)
 	{
 		const ULLAttributes* attributesComp = pawn->FindComponentByClass<ULLAttributes>();
-		//const UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
+		const UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
 
 		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
 
@@ -31,16 +31,15 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 			LLsaveGame->playerTransform = pawn->GetActorTransform();						
 		}
 
-		//if(questComp && LLsaveGame)
-		//{
-		//	questComp->quest.GetKeys(LLsaveGame->keys);
+		//f(questComp && LLsaveGame)
+		//
 		//
 		//	for (int i = 0; i < questComp->quest.Num(); i++)
 		//	{
 		//		const FQuestParam* savePar = questComp->quest.Find(LLsaveGame->keys[i]);
 		//		LLsaveGame->questValues.Insert(savePar->questCounter, i);
 		//	}
-		//}
+		//
 
 		if (UGameplayStatics::SaveGameToSlot(LLsaveGame, saveName, index))
 		{
@@ -65,7 +64,7 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 	
 	if (pawn && SaveGameObject) 
 	{
-		//UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
+		UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
 
 		ULLAttributes* attributesComp = pawn->FindComponentByClass<ULLAttributes>();
 		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);

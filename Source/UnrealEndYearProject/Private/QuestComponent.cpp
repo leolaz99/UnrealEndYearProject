@@ -7,46 +7,57 @@ UQuestComponent::UQuestComponent()
 	completedQuest = 0;
 }
 
-void UQuestComponent::IsCompleted(const int ID)
+void UQuestComponent::IsCompleted(const int QuestIndex)
 {
-	FQuestParam* questpar = quest.Find(ID);
-	if (questpar)
-		questpar->isCompleted = true;
+	if (quest.Num() > 0)
+	{
+		for (int i = 0; i < quest.Num(); i++)
+		{
+			if (quest[i].questIndex == QuestIndex)
+				quest[i].isCompleted = true;
+		}
+	}
 
-	OnQuestComplete.Broadcast(ID);
+	OnQuestComplete.Broadcast(QuestIndex);
 
 	completedQuest++;
-
+	
 	if(completedQuest == quest.Num())
 		UGameplayStatics::OpenLevel(this, map);
 }
 
-void UQuestComponent::AddCounter(const int ID, const int ValueToAdd)
+void UQuestComponent::AddCounter(const int QuestIndex, const int ValueToAdd)
 {
-	FQuestParam* questpar = quest.Find(ID);
-
-	if (questpar)
+	if (quest.Num() > 0)
 	{
-		questpar->questCounter = questpar->questCounter + ValueToAdd;
-
-		OnValueChange.Broadcast(ID);
-
-		if (questpar->questCounter >= questpar->questTarget)
-			IsCompleted(ID);
+		for (int i = 0; i < quest.Num(); i++)
+		{
+			if (quest[i].questIndex == QuestIndex) 
+			{
+				quest[i].questCounter = quest[i].questCounter + ValueToAdd;
+				OnValueChange.Broadcast(QuestIndex, quest[i].questCounter);
+				
+				if (quest[i].questCounter >= quest[i].questTarget)
+					IsCompleted(QuestIndex);
+			}
+		}	
 	}
 }
 
-void UQuestComponent::SetCounter(const int ID, const int newValue)
+void UQuestComponent::SetCounter(const int QuestIndex, const int newValue)
 {
-	FQuestParam* questpar = quest.Find(ID);
-
-	if (questpar)
+	if (quest.Num() > 0)
 	{
-		questpar->questCounter = newValue;
+		for (int i = 0; i < quest.Num(); i++)
+		{
+			if (quest[i].questIndex == QuestIndex)
+			{
+				quest[i].questCounter = newValue;
+				OnValueChange.Broadcast(QuestIndex, quest[i].questCounter);
 
-		OnValueChange.Broadcast(ID);
-
-		if (questpar->questCounter >= questpar->questTarget)
-			IsCompleted(ID);
+				if (quest[i].questCounter >= quest[i].questTarget)
+					IsCompleted(QuestIndex);
+			}
+		}
 	}
 }
