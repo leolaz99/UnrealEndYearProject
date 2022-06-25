@@ -9,9 +9,15 @@ class UNREALENDYEARPROJECT_API ULLSaveSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
+public:
 	UFUNCTION(BlueprintCallable, Category = Save)
 	bool Save(const FString& saveName, const int32 index);
 
 	UFUNCTION(BlueprintCallable, Category = Save)
 	void Load(const FString& saveName, const int32 index);
+
+	UFUNCTION(BlueprintCallable, Category = Save)
+	void RestartMap(const FName map);
+
+	bool isRestart;
 };

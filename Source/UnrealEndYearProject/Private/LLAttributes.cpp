@@ -11,7 +11,6 @@ ULLAttributes::ULLAttributes()
 void ULLAttributes::BeginPlay()
 {
 	Super::BeginPlay();
-	SetHealth(MaxHealth);
 }
 
 void ULLAttributes::RemoveHealth(const float value)
