@@ -56,9 +56,27 @@ public:
 	void SetCounter(const int QuestIndex, const int newValue);
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	int32 GetCounter(const int QuestIndex)
+	int32 GetQuestCounter(const int arrayIndex)
 	{
-		return quest[QuestIndex].questCounter;
+		return quest[arrayIndex].questCounter;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	int GetQuestLenght()
+	{
+		return quest.Num();
+	}
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	int GetQuestKey(int arrayElement)
+	{
+		return quest[arrayElement].questIndex;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = LL)
+	int32 SetQuestCounter(int arrayIndex, int32 newValue)
+	{
+		return quest[arrayIndex].questCounter = newValue;
 	}
 
 	UPROPERTY(BlueprintAssignable, Category = LL)

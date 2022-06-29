@@ -19,7 +19,7 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 	if (pawn && SaveGameObject)
 	{
 		const ULLAttributes* attributesComp = pawn->FindComponentByClass<ULLAttributes>();
-		const UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
+		UQuestComponent* questComp = playerControl->FindComponentByClass<UQuestComponent>();
 
 		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
 
@@ -30,6 +30,14 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 			
 			LLsaveGame->playerTransform = pawn->GetActorTransform();						
 		}
+
+		//if (questComp)
+		//{
+		//	for (int i = 0; i < questComp->GetQuestLenght()  ;i++)
+		//	{
+		//		LLsaveGame->questValues[i] = questComp->GetQuestCounter(i);
+		//	}
+		//}
 
 		if (UGameplayStatics::SaveGameToSlot(LLsaveGame, saveName, index))
 		{
@@ -67,6 +75,14 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 					attributesComp->SetHealth(LLsaveGame->HP);
 
 				pawn->SetActorTransform(LLsaveGame->playerTransform);
+
+				//if (questComp)
+				//{
+				//	for (int i = 0; i < questComp->GetQuestLenght(); i++)
+				//	{
+				//		questComp->SetQuestCounter(i, LLsaveGame->questValues[i]);
+				//	}
+				//}
 
 				if (GEngine)
 					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("LOAD SUCCEDED!"));

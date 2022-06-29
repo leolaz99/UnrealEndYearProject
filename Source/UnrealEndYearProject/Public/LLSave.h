@@ -16,6 +16,5 @@ public:
 	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
 	FTransform playerTransform;
 
-	TArray<int32> keys;
 	TArray<int32> questValues;
 };
