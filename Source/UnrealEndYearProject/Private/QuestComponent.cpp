@@ -14,14 +14,14 @@ void UQuestComponent::IsCompleted(const int QuestIndex)
 		for (int i = 0; i < quest.Num(); i++)
 		{
 			if (quest[i].questIndex == QuestIndex)
+			{
 				quest[i].isCompleted = true;
+				OnQuestComplete.Broadcast(QuestIndex);
+				completedQuest++;
+			}			
 		}
 	}
 
-	OnQuestComplete.Broadcast(QuestIndex);
-
-	completedQuest++;
-	
 	if(completedQuest == quest.Num())
 		UGameplayStatics::OpenLevel(this, map);
 }
