@@ -31,13 +31,13 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 			LLsaveGame->playerTransform = pawn->GetActorTransform();						
 		}
 
-		//if (questComp)
-		//{
-		//	for (int i = 0; i < questComp->GetQuestLenght()  ;i++)
-		//	{
-		//		LLsaveGame->questValues[i] = questComp->GetQuestCounter(i);
-		//	}
-		//}
+		if (questComp)
+		{
+			for (int i = 0; i < questComp->GetQuestLenght()  ;i++)
+			{
+				LLsaveGame->questValues.Add(questComp->GetQuestCounter(i));
+			}
+		}
 
 		if (UGameplayStatics::SaveGameToSlot(LLsaveGame, saveName, index))
 		{
@@ -76,13 +76,13 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 
 				pawn->SetActorTransform(LLsaveGame->playerTransform);
 
-				//if (questComp)
-				//{
-				//	for (int i = 0; i < questComp->GetQuestLenght(); i++)
-				//	{
-				//		questComp->SetQuestCounter(i, LLsaveGame->questValues[i]);
-				//	}
-				//}
+				if (questComp)
+				{
+					for (int i = 0; i < questComp->GetQuestLenght(); i++)
+					{
+						questComp->SetQuestCounter(i, LLsaveGame->questValues[i]);
+					}
+				}
 
 				if (GEngine)
 					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("LOAD SUCCEDED!"));
