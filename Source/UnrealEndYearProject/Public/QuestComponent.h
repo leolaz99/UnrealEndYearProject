@@ -74,10 +74,8 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = LL)
-	int32 SetQuestCounter(int arrayIndex, int32 newValue)
-	{
-		return quest[arrayIndex].questCounter = newValue;
-	}
+	int32 SetQuestCounter(int arrayIndex, int32 newValue);
+	
 
 	UPROPERTY(BlueprintAssignable, Category = LL)
 	FOnQuestComplete OnQuestComplete;

@@ -5,6 +5,7 @@
 #include "LLSave.h"
 #include "GameFramework/Pawn.h"
 #include "LLSaveDeveloperSettings.h"
+#include "LLPlayerController.h"
 
 bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 {
@@ -27,15 +28,32 @@ bool ULLSaveSubsystem::Save(const FString& saveName, const int32 index)
 		{
 			if (attributesComp)
 				LLsaveGame->HP = attributesComp->GetCurrentHealth();
-			
-			LLsaveGame->playerTransform = pawn->GetActorTransform();						
-		}
 
-		if (questComp)
-		{
-			for (int i = 0; i < questComp->GetQuestLenght()  ;i++)
+			LLsaveGame->playerTransform = pawn->GetActorTransform();
+
+			const ALLPlayerController* LLPlayercont = Cast<ALLPlayerController>(playerControl);
+
+			for (int i = 0; i < LLPlayercont->enemyID.Num(); i++)
 			{
-				LLsaveGame->questValues.Add(questComp->GetQuestCounter(i));
+				LLsaveGame->EnemyID.Add(LLPlayercont->enemyID[i]);
+			}
+
+			for (int i = 0; i < LLPlayercont->pointOfInterestID.Num(); i++)
+			{
+				LLsaveGame->savePointOfInterestID.Add(LLPlayercont->pointOfInterestID[i]);
+			}
+
+			for (int i = 0; i < LLPlayercont->interactableID.Num(); i++)
+			{
+				LLsaveGame->saveInteractableID.Add(LLPlayercont->interactableID[i]);
+			}
+
+			if (questComp)
+			{
+				for (int i = 0; i < questComp->GetQuestLenght(); i++)
+				{
+					LLsaveGame->questValues.Add(questComp->GetQuestCounter(i));
+				}
 			}
 		}
 
@@ -58,7 +76,7 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 {
 	if (isRestart)
 	{
-		const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+		APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
 		USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(saveName, index);
 		APawn* pawn = UGameplayStatics::GetPlayerPawn(this, 0);
 
@@ -84,6 +102,23 @@ void ULLSaveSubsystem::Load(const FString& saveName, const int32 index)
 					}
 				}
 
+				ALLPlayerController* LLPlayercont = Cast<ALLPlayerController>(playerControl);
+
+				for (int i = 0; i < LLsaveGame->EnemyID.Num(); i++)
+				{
+					LLPlayercont->AddEnemyID(LLsaveGame->EnemyID[i]);
+				}
+
+				for (int i = 0; i < LLsaveGame->saveInteractableID.Num(); i++)
+				{
+					LLPlayercont->AddInteractableID(LLsaveGame->saveInteractableID[i]);
+				}
+
+				for (int i = 0; i < LLsaveGame->savePointOfInterestID.Num(); i++)
+				{
+					LLPlayercont->AddPointOfInterestID(LLsaveGame->savePointOfInterestID[i]);
+				}
+
 				if (GEngine)
 					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("LOAD SUCCEDED!"));
 			}
@@ -101,4 +136,52 @@ void ULLSaveSubsystem::RestartMap(const FName map)
 {
 	UGameplayStatics::OpenLevel(this, map);
 	isRestart = true;
+}
+
+bool ULLSaveSubsystem::GetIDEnemy(const FString& saveName, const int32 index, const int32 id)
+{
+	const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+	USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(saveName, index);
+	if (SaveGameObject)
+	{
+		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
+		if (LLsaveGame && LLsaveGame->EnemyID.Contains(id))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ULLSaveSubsystem::GetIDPointOfInterest(const FString& saveName, const int32 index, const int32 id)
+{
+	const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+	USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(saveName, index);
+	if (SaveGameObject)
+	{
+		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
+		if (LLsaveGame && LLsaveGame->savePointOfInterestID.Contains(id))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ULLSaveSubsystem::GetIDInteractable(const FString& saveName, const int32 index, const int32 id)
+{
+	const APlayerController* playerControl = UGameplayStatics::GetPlayerController(this, 0);
+	USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(saveName, index);
+	if (SaveGameObject)
+	{
+		ULLSave* LLsaveGame = Cast<ULLSave>(SaveGameObject);
+		if (LLsaveGame && LLsaveGame->saveInteractableID.Contains(id))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(blueprintReadOnly, EditAnywhere, Category = LLQuest)
 	int id;
 
+	UPROPERTY(blueprintReadOnly, EditAnywhere, Category = Save)
+	int saveID;
+
 public:	
 	UFUNCTION(BlueprintCallable, Category = LL)
 	void AttackPlayer();

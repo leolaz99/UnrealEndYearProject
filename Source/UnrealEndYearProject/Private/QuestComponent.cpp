@@ -61,3 +61,15 @@ void UQuestComponent::SetCounter(const int QuestIndex, const int newValue)
 		}
 	}
 }
+
+int32 UQuestComponent::SetQuestCounter(int arrayIndex, int32 newValue)
+{
+	quest[arrayIndex].questCounter = newValue;
+
+	if(quest[arrayIndex].questCounter == quest[arrayIndex].questTarget)
+	{
+		IsCompleted(quest[arrayIndex].questIndex);
+	}
+
+	return quest[arrayIndex].questCounter;
+}

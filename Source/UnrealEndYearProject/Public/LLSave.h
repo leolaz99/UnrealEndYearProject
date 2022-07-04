@@ -18,4 +18,13 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
 	TArray<int32> questValues;
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
+	TArray<int32> EnemyID;
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
+	TArray<int32> saveInteractableID;
+
+	UPROPERTY(BlueprintReadOnly, SaveGame, Category = Save)
+	TArray<int32> savePointOfInterestID;
 };

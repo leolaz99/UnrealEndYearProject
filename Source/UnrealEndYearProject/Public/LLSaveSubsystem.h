@@ -19,5 +19,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Save)
 	void RestartMap(const FName map);
 
+	UFUNCTION(BlueprintCallable, Category = Save)
+	bool GetIDEnemy(const FString& saveName, const int32 index, const int32 id);
+
+	UFUNCTION(BlueprintCallable, Category = Save)
+	bool GetIDPointOfInterest(const FString& saveName, const int32 index, const int32 id);
+
+	UFUNCTION(BlueprintCallable, Category = Save)
+	bool GetIDInteractable(const FString& saveName, const int32 index, const int32 id);
+
+	UPROPERTY(BlueprintReadOnly)
 	bool isRestart;
 };
